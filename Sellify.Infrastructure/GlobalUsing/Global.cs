@@ -1,0 +1,7 @@
+﻿global using Microsoft.EntityFrameworkCore;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.DependencyInjection;
+global using Sellify.Infrastructure.ApplicationContext;
+global using Sellify.Infrastructure.IdentityUserModel;
+global using Microsoft.AspNetCore.Identity;
+global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
