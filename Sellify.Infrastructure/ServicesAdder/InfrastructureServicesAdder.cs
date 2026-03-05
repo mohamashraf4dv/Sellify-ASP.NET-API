@@ -1,8 +1,4 @@
 ﻿
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-
 namespace Sellify.Infrastructure.ServicesAdder
 {
     public static class InfrastructureServicesAdder
@@ -23,6 +19,7 @@ namespace Sellify.Infrastructure.ServicesAdder
                 o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(o =>
             {
+                
                 o.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
@@ -31,6 +28,10 @@ namespace Sellify.Infrastructure.ServicesAdder
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:SecretKey"])),
                 };
             });
+            #region Scoped Repositories
+            services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
+            #endregion
+
             return services;
         }
     }

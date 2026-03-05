@@ -8,3 +8,10 @@ global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 global using System.Reflection;
 
+global using Microsoft.AspNetCore.Authentication.JwtBearer;
+global using Microsoft.IdentityModel.Tokens;
+global using Sellify.Application.Contracts;
+global using Sellify.Infrastructure.Implementations.Repositories;
+global using System.Text;
+
+
