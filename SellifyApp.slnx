@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Sellify.Application/Sellify.Application.csproj" />
+  <Project Path="Sellify.Domain/Sellify.Domain.csproj" />
+  <Project Path="Sellify.Infrastructure/Sellify.Infrastructure.csproj" />
+  <Project Path="Sellify.WebAPI/Sellify.WebAPI.csproj" />
+</Solution>
