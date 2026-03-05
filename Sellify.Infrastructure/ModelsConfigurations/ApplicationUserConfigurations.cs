@@ -26,7 +26,6 @@ namespace Sellify.Infrastructure.ModelsConfigurations
                 builder.Property(u => u.UserName)
                     .IsRequired()
                     .HasMaxLength(50);
-
                     
         }
     }

@@ -1,4 +1,5 @@
 ﻿
+
 namespace Sellify.Infrastructure.ApplicationContext
 {
     internal class SellifyMicrosoftSqlContext:IdentityDbContext<ApplicationUser>
@@ -8,6 +9,7 @@ namespace Sellify.Infrastructure.ApplicationContext
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
     }
 }
