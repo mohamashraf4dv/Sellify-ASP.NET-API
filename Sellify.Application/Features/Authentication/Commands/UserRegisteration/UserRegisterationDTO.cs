@@ -11,6 +11,6 @@ namespace Sellify.Application.Features.Authentication.Commands.UserRegisteration
         string Email,
         string Password,
         DateOnly DateOfBirth,
-        string? PhoneNumber
+        string? PhoneNumber = null
     );
 }

@@ -9,7 +9,10 @@ namespace Sellify.Application.ServiceAdder
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
-            services.AddMediatR(a=> Assembly.GetExecutingAssembly());
+            services.AddMediatR(o=>
+            {
+                o.RegisterServicesFromAssemblyContaining(typeof(ApplicationServicesAdder));
+            });
             return services;
         }
     }

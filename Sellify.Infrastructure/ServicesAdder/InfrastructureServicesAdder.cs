@@ -23,7 +23,10 @@ namespace Sellify.Infrastructure.ServicesAdder
                 o.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
+                    ValidIssuer = configuration["Jwt:Issuer"],
                     ValidateAudience = true,
+                    ValidAudience = configuration["Jwt:Audience"],
+
                     ValidateLifetime = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:SecretKey"])),
                 };

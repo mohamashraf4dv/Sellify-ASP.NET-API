@@ -1,13 +1,15 @@
 using Scalar.AspNetCore;
+using Sellify.Application.ServiceAdder;
 using Sellify.Infrastructure.ServicesAdder;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().ConfigureApiBehaviorOptions(options=> options.SuppressModelStateInvalidFilter=true);
 builder.Services.AddOpenApi();
 builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddApplicationServices();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
