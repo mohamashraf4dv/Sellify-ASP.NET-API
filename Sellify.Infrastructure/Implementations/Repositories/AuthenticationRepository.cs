@@ -61,33 +61,35 @@ namespace Sellify.Infrastructure.Implementations.Repositories
         }
         public async Task<GenericResultDTO> InternalLogin(InternalUserLoginDTO userLoginDTO) 
         {
-            ApplicationUser? user = await _userManager.Users.FirstOrDefaultAsync(u => u.UserName == userLoginDTO.UserName);
+            ApplicationUser? user = await GetUser(userLoginDTO.LoginIdentifier);
+
             if (user == null)
             {
-                _logger.LogInformation("User {UserName} tried to login but is not in our database", userLoginDTO.UserName);
+                _logger.LogInformation("User {LoginIdentifier} tried to login but is not in our database", userLoginDTO.LoginIdentifier);
 
-                return new GenericResultDTO(data: null, statusCode: StatusCodes.Status404NotFound, errorsKeyValues: new Dictionary<string, HashSet<string>> { { "UserName", new HashSet<string> { $"No user found with username '{userLoginDTO.UserName}'." } } });
+                return new GenericResultDTO(data: null, statusCode: StatusCodes.Status404NotFound, errorsKeyValues: new Dictionary<string, HashSet<string>> { { "Credentials", new HashSet<string> { "invalid credentials" } } });
             }
             bool isPasswordValid = _userManager.CheckPasswordAsync(user, userLoginDTO.Password).Result;
 
             if (!isPasswordValid)
             {
-                _logger.LogInformation("User {UserName} tried to login with invalid password.", userLoginDTO.UserName);
+                _logger.LogInformation("User {LoginIdentifier} tried to login with invalid password.", userLoginDTO.LoginIdentifier);
 
-                return new GenericResultDTO(data:null,statusCode: StatusCodes.Status400BadRequest,errorsKeyValues: new Dictionary<string, HashSet<string>> { { "Password", new HashSet<string> { "Invalid password." } } });
+                return new GenericResultDTO(data:null,statusCode: StatusCodes.Status400BadRequest,errorsKeyValues: new Dictionary<string, HashSet<string>> { { "Credentials", new HashSet<string> { "invalid credentials" } } });
             }
-            string jwtToken = await CreateJwtToken(userLoginDTO.UserName);
-            _logger.LogInformation("User {UserName} logged in successfully.", userLoginDTO.UserName);
+            string jwtToken = await CreateJwtToken(userLoginDTO.LoginIdentifier);
+            _logger.LogInformation("User {LoginIdentifier} logged in successfully.", userLoginDTO.LoginIdentifier);
             return new GenericResultDTO(data: new { Token = jwtToken }, statusCode: StatusCodes.Status202Accepted);
 
         }
-        private Task<string> CreateJwtToken(string userName) 
+        private Task<string> CreateJwtToken(string loginIdentifier,bool isPersistence = false) 
         {
             DateTime expiryDate = DateTime.UtcNow.AddMinutes(5);
             IEnumerable<Claim> userClaims = new List<Claim>
             {
                 new Claim("JWTID",Guid.NewGuid().ToString()),
-                new Claim(ClaimTypes.Name,userName)
+                new Claim("LoginIdentifer",loginIdentifier),
+                new Claim(ClaimTypes.IsPersistent, isPersistence.ToString().ToLower())
             };
             string issuer = _configuration["JWT:Issuer"];
             string audience = _configuration["JWT:Audience"];
@@ -102,6 +104,23 @@ namespace Sellify.Infrastructure.Implementations.Repositories
 
             string jwtSecurityTokenHandler = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
             return Task.FromResult(jwtSecurityTokenHandler); 
+        }
+        private async Task<ApplicationUser> GetUser(string userLoginIdentifier)
+        {
+            ApplicationUser? user;
+            if (string.IsNullOrEmpty(userLoginIdentifier)) {
+                return null;
+            }
+            else if (userLoginIdentifier.Contains("@"))
+            {
+                user = await _userManager.FindByEmailAsync(userLoginIdentifier);
+            }
+            else
+            {
+                user = await _userManager.Users.FirstOrDefaultAsync(u => u.UserName == userLoginIdentifier);
+
+            }
+            return user;
         }
     }
 }

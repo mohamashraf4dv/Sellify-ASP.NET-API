@@ -10,6 +10,15 @@ builder.Services.AddControllers().ConfigureApiBehaviorOptions(options=> options.
 builder.Services.AddOpenApi();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddApplicationServices();
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins(builder.Configuration["AllowedDomainPolicy"])
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -19,11 +28,11 @@ if (app.Environment.IsDevelopment())
     app.MapScalarApiReference(o=>
     {
         o.Title = "Sellify API";
-        o.Theme = ScalarTheme.Moon;
+        o.Theme = ScalarTheme.Saturn;
         o.HideClientButton = true;
     });
 }
-
+app.UseCors();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
