@@ -64,16 +64,22 @@ namespace Sellify.Infrastructure.Implementations.Repositories
             ApplicationUser? user = await _userManager.Users.FirstOrDefaultAsync(u => u.UserName == userLoginDTO.UserName);
             if (user == null)
             {
+                _logger.LogInformation("User {UserName} tried to login but is not in our database", userLoginDTO.UserName);
+
                 return new GenericResultDTO(data: null, statusCode: StatusCodes.Status404NotFound, errorsKeyValues: new Dictionary<string, HashSet<string>> { { "UserName", new HashSet<string> { $"No user found with username '{userLoginDTO.UserName}'." } } });
             }
             bool isPasswordValid = _userManager.CheckPasswordAsync(user, userLoginDTO.Password).Result;
 
             if (!isPasswordValid)
             {
+                _logger.LogInformation("User {UserName} tried to login with invalid password.", userLoginDTO.UserName);
+
                 return new GenericResultDTO(data:null,statusCode: StatusCodes.Status400BadRequest,errorsKeyValues: new Dictionary<string, HashSet<string>> { { "Password", new HashSet<string> { "Invalid password." } } });
             }
             string jwtToken = await CreateJwtToken(userLoginDTO.UserName);
+            _logger.LogInformation("User {UserName} logged in successfully.", userLoginDTO.UserName);
             return new GenericResultDTO(data: new { Token = jwtToken }, statusCode: StatusCodes.Status202Accepted);
+
         }
         private Task<string> CreateJwtToken(string userName) 
         {
