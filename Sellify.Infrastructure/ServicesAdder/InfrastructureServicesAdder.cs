@@ -10,8 +10,14 @@ namespace Sellify.Infrastructure.ServicesAdder
             {
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             });
-            services.AddIdentityCore<ApplicationUser>()
-                .AddEntityFrameworkStores<SellifyMicrosoftSqlContext>();
+            services.AddIdentityCore<ApplicationUser>(o=> {
+                o.Password.RequiredUniqueChars = 0;
+                o.Password.RequiredLength = 6;
+                o.Password.RequireUppercase = false;
+                o.Password.RequireDigit = false;
+                o.Password.RequireNonAlphanumeric = false;
+                o.Password.RequireLowercase = false;
+                                }).AddEntityFrameworkStores<SellifyMicrosoftSqlContext>();
 
             services.AddAuthentication(o =>
             {

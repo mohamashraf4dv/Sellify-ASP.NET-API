@@ -31,15 +31,16 @@ namespace Sellify.Infrastructure.Implementations.Repositories
         
           IdentityResult userCreationResult = await _userManager.CreateAsync(new ApplicationUser
             {
-                FirstName = user?.FirstName,
-                LastName = user?.LastName,
-                UserName = user?.UserName,
-                Email = user?.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                UserName = user.UserName,
+                Email = user.Email,
                 DateOfBirth = user.DateOfBirth,
-                PhoneNumber = user?.PhoneNumber
-            },user?.Password);
+                PhoneNumber = user.PhoneNumber
+            },user.Password);
 
-            _logger.LogWarning("User {UserName} registration attempt resulted in {Result}", user.UserName, userCreationResult.Succeeded ? "success" : "failure");
+            _logger.LogInformation("User {UserName} registration attempt resulted in {Result}", user.UserName, userCreationResult.Succeeded ? "success" : "failure");
+
             var errors = new Dictionary<string, HashSet<string>>();
             foreach(IdentityError error in userCreationResult.Errors)
             {
