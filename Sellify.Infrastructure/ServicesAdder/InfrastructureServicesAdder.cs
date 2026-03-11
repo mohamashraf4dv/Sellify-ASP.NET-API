@@ -10,6 +10,7 @@ namespace Sellify.Infrastructure.ServicesAdder
 
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddScoped<SellifyDapperContext>();
             services.AddDbContext<SellifyMicrosoftSqlContext>(options =>
             {
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
