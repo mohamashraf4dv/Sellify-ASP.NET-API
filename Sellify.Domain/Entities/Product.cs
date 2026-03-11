@@ -1,7 +1,9 @@
 ﻿
+using Sellify.Domain.Contracts;
+
 namespace Sellify.Domain.Entities
 {
-    public class Product
+    public class Product:ISoftDeletable,IEntityUpdatable
     {
         public Guid Id { get; set; } = Guid.NewGuid();
         public required string Name { get; set; }
@@ -14,6 +16,7 @@ namespace Sellify.Domain.Entities
         public DateTime? LastUpdatedAt { get; set; }
 
         public bool IsDeleted { get; set; } = false;
+        public DateTime? DeletedAt { get; set; }
 
         public ICollection<ProductImage> ProductImages { get; set; }
         public ProductImage? Thumbnail { get; set; }
