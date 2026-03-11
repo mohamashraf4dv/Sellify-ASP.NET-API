@@ -1,9 +1,4 @@
-﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Sellify.Application.Features.Authentication.Commands.InternalUserLogin
+﻿namespace Sellify.Application.Features.Authentication.Commands.InternalUserLogin
 {
     public class InternalUserLoginCommandValidator : AbstractValidator<InternalUserLoginCommand>
     {

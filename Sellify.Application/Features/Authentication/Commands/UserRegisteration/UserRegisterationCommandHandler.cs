@@ -1,22 +1,16 @@
-﻿using MediatR;
-using Sellify.Application.Contracts;
-using Sellify.Application.Global;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿
 namespace Sellify.Application.Features.Authentication.Commands.UserRegisteration
 {
     public class UserRegisterationCommandHandler : IRequestHandler<UserRegisterationCommand, GenericResultDTO>
     {
-        private readonly IAuthenticationRepository _authenticationRepository;
-        public UserRegisterationCommandHandler(IAuthenticationRepository authenticationRepository)
+        private readonly IAuthenticationService _authenticationService;
+        public UserRegisterationCommandHandler(IAuthenticationService authenticationService)
         {
-            this._authenticationRepository = authenticationRepository;
+            this._authenticationService = authenticationService;
         }
         public async Task<GenericResultDTO> Handle(UserRegisterationCommand request, CancellationToken cancellationToken)
         {
-            GenericResultDTO result = await _authenticationRepository.Register(request.userRegisteration);
+            GenericResultDTO result = await _authenticationService.Register(request.userRegisteration);
             return result;
         }
     

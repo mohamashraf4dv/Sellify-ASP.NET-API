@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Sellify.Application.Features.Authentication.Commands.InternalUserLogin;
 using Sellify.Application.Features.Authentication.Commands.UserRegisteration;
 using Sellify.Application.Global;
+using Sellify.Infrastructure.IdentityUserModel;
+using Sellify.Infrastructure.Mapperly;
 namespace Sellify.WebAPI.Controllers
 {
     [Route("api/[controller]")]
@@ -30,5 +32,6 @@ namespace Sellify.WebAPI.Controllers
             var result = await _mediator.Send(new InternalUserLoginCommand() { userLoginDTO = userLoginDTO });
             return StatusCode(result.statusCode, result);
         }
+
     }
 }

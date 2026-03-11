@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Sellify.Application.Global
+﻿namespace Sellify.Application.Global
 {
     public record GenericResultDTO(
         dynamic data,

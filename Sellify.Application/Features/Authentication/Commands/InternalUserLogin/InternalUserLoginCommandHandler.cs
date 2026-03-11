@@ -1,23 +1,16 @@
-﻿using MediatR;
-using Sellify.Application.Contracts;
-using Sellify.Application.Global;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Sellify.Application.Features.Authentication.Commands.InternalUserLogin
+﻿namespace Sellify.Application.Features.Authentication.Commands.InternalUserLogin
 {
     public class InternalUserLoginCommandHandler : IRequestHandler<InternalUserLoginCommand, GenericResultDTO>
     {
-        private readonly IAuthenticationRepository _authenticationRepository;
+        private readonly IAuthenticationService _authenticationService;
 
-        public InternalUserLoginCommandHandler(IAuthenticationRepository authenticationRepository)
+        public InternalUserLoginCommandHandler(IAuthenticationService authenticationService)
         {
-            this._authenticationRepository = authenticationRepository;
+            this._authenticationService = authenticationService;
         }
         public async Task<GenericResultDTO> Handle(InternalUserLoginCommand request, CancellationToken cancellationToken)
         {
-            var result = await this._authenticationRepository.InternalLogin(request.userLoginDTO);
+            var result = await this._authenticationService.InternalLogin(request.userLoginDTO);
             return result;
         }
     }

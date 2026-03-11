@@ -1,11 +1,4 @@
-﻿using FluentValidation;
-using MediatR;
-using Sellify.Application.Global;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Sellify.Application.Behavior
+﻿namespace Sellify.Application.Behavior
 {
     public class ValidationBehaviorPipeline<TRequest,TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse> where TResponse: GenericResultDTO
     {

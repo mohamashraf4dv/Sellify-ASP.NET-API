@@ -1,4 +1,8 @@
 ﻿
+using Sellify.Application.Contracts.Services;
+using Sellify.Infrastructure.Services;
+using Sellify.Infrastructure.ServicesHelper;
+
 namespace Sellify.Infrastructure.ServicesAdder
 {
     public static class InfrastructureServicesAdder
@@ -38,9 +42,14 @@ namespace Sellify.Infrastructure.ServicesAdder
                 };
             });
             #region Scoped Repositories
-            services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
+            //services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
             #endregion
 
+            #region Scoped Services
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IJwtTokenService, JwtTokenService>();
+            #endregion
+            services.AddScoped<UserHelper>();
             return services;
         }
     }
