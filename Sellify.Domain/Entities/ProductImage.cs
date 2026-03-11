@@ -9,5 +9,6 @@ namespace Sellify.Domain.Entities
 
         //Navigation Property
         public Product Product { get; set; }
+        public Guid ProductId { get; set; }
     }
 }

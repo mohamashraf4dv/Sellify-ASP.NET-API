@@ -7,7 +7,7 @@ namespace Sellify.Domain.Entities
         public required string Name { get; set; }
         public string? Description { get; set; }
         public decimal Price { get; set; }
-        public long Stock { get; set; }
+        public long Stock { get; set; } = 0;
         public bool IsInStock => Stock > 0;
 
         public DateTime CreatedAt { get; set; }= DateTime.Now;
@@ -16,6 +16,6 @@ namespace Sellify.Domain.Entities
         public bool IsDeleted { get; set; } = false;
 
         public ICollection<ProductImage> ProductImages { get; set; }
-        public ProductImage Thumbnail { get; set; }
+        public ProductImage? Thumbnail { get; set; }
     }
 }

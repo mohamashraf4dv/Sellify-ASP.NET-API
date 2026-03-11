@@ -1,10 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
+using Sellify.Domain.Entities;
 
 namespace Sellify.Infrastructure.ModelsConfigurations
 {
-    internal class ProductConfigurations
+    public class ProductConfigurations : IEntityTypeConfiguration<Product>
     {
+        public void Configure(EntityTypeBuilder<Product> builder)
+        {
+            builder.HasKey(p => p.Id);
+            builder.HasIndex(p => p.Name);
+
+            builder.HasMany(p => p.ProductImages)
+                .WithOne(p => p.Product).HasForeignKey(p=>p.ProductId);
+
+            builder.Property(p => p.Price).IsRequired();
+            builder.Property(p => p.Name).IsRequired();
+            builder.Property(p => p.Stock).IsRequired();
+
+        }
     }
 }
