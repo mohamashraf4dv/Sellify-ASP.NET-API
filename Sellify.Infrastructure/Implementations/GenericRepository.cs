@@ -1,9 +1,10 @@
 ﻿
+using Sellify.Application.Contracts.Repositories;
 using Sellify.Domain.Contracts;
 
 namespace Sellify.Infrastructure.Implementations
 {
-    public class GenericRepository<TEntity> where TEntity : class , ISoftDeletable, IEntityUpdatable, new()
+    public class GenericRepository<TEntity> :IGenericRepository<TEntity> where TEntity : class, ISoftDeletable, IEntityUpdatable, new()
     {
         private readonly SellifyMicrosoftSqlContext _context;
 
