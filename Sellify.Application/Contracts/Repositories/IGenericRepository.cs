@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Sellify.Application.Contracts.Repositories
 {
-    public interface IGenericRepository<TEntity> where TEntity : class, ISoftDeletable, IEntityUpdatable, new()
+    public interface IGenericRepository<TEntity> where TEntity : class, ISoftDeletable, IEntityUpdatable
     {
         public Task<TEntity> CreateAsync(TEntity entity, CancellationToken cancellationToken);
         public TEntity Update(TEntity entity);

@@ -12,5 +12,7 @@ global using Microsoft.AspNetCore.Authentication.JwtBearer;
 global using Microsoft.IdentityModel.Tokens;
 global using Sellify.Application.Contracts;
 global using System.Text;
+global using Sellify.Application.Contracts.Repositories;
+global using Sellify.Domain.Contracts;
 
 

@@ -4,7 +4,7 @@ using System.Data;
 
 namespace Sellify.Infrastructure.ApplicationContext
 {
-    public class SellifyDapperContext
+    public class SellifyDapperContext : IDisposable
     {
         private readonly IConfiguration _configuration;
         private IDbConnection? _connection;
@@ -18,6 +18,11 @@ namespace Sellify.Infrastructure.ApplicationContext
                 _connection ??= new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
                 return _connection;
             } 
+        }
+
+        public void Dispose()
+        {
+            _connection?.Dispose();
         }
     }
 }
