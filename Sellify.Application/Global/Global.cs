@@ -5,5 +5,5 @@ global using Sellify.Application.Global;
 global using Sellify.Application.Contracts.Services;
 global using MediatR;
 global using FluentValidation;
-
-
+global using Sellify.Application.Contracts.RepoBehavior;
+global using Sellify.Domain.Entities;

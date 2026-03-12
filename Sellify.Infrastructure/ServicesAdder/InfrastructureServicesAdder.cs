@@ -1,7 +1,4 @@
 ﻿
-using Sellify.Application.Contracts.Services;
-using Sellify.Infrastructure.Services;
-using Sellify.Infrastructure.ServicesHelper;
 
 namespace Sellify.Infrastructure.ServicesAdder
 {
@@ -43,7 +40,7 @@ namespace Sellify.Infrastructure.ServicesAdder
                 };
             });
             #region Scoped Repositories
-            //services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
             #endregion
 
             #region Scoped Services

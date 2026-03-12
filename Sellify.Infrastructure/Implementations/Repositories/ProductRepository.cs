@@ -1,10 +1,8 @@
 ﻿
-using Dapper;
-using Sellify.Application.Contracts.RepoBehavior;
 
 namespace Sellify.Infrastructure.Implementations.Repositories
 {
-    public class ProductRepository : GenericRepository<Product>,IGetterEntity<Product>
+    public class ProductRepository : GenericRepository<Product>,IProductRepository
     {
         private readonly SellifyMicrosoftSqlContext _efContext;
         private readonly SellifyDapperContext _dapperContext;
@@ -28,7 +26,7 @@ namespace Sellify.Infrastructure.Implementations.Repositories
             var skip = (pageNumber - 1) * take;
             var sql = "SELECT p.Id, Name ,Price, Stock , pimg.Url FROM Products p INNER JOIN ProductImage pimg ON pimg.Id = ThumbnailId OFFSET @skip ROWS FETCH @take ROWS ONLY;";
             using var connection = _dapperContext.Connection;
-            IEnumerable<Product> products = await connection.QueryAsync<Product>(sql);
+            IEnumerable<Product> products = await connection.QueryAsync<Product>(sql, new {skip,take});
             return products.ToList().AsReadOnly();
         }
     }

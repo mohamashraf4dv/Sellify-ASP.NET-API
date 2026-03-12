@@ -14,5 +14,9 @@ global using Sellify.Application.Contracts;
 global using System.Text;
 global using Sellify.Application.Contracts.Repositories;
 global using Sellify.Domain.Contracts;
-
+global using Sellify.Application.Contracts.Services;
+global using Sellify.Infrastructure.Implementations.Repositories;
+global using Sellify.Infrastructure.Services;
+global using Sellify.Infrastructure.ServicesHelper;
+global using Dapper;
 
