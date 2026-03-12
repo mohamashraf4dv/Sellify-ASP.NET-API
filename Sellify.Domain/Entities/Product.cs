@@ -18,7 +18,9 @@ namespace Sellify.Domain.Entities
         public bool IsDeleted { get; set; } = false;
         public DateTime? DeletedAt { get; set; }
 
-        public ICollection<ProductImage> ProductImages { get; set; }
+        public ICollection<ProductImage> ProductImages { get; set; } = new HashSet<ProductImage>();
+
         public ProductImage? Thumbnail { get; set; }
+        public Guid? ThumbnailId { get; set; }
     }
 }
