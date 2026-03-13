@@ -1,5 +1,7 @@
 ﻿
 
+using Sellify.Application.Features.Products.Query.GetAllProducts;
+
 namespace Sellify.Infrastructure.Implementations.Repositories
 {
     public class ProductRepository : GenericRepository<Product>,IProductRepository
@@ -21,13 +23,20 @@ namespace Sellify.Infrastructure.Implementations.Repositories
             return product;
         }
 
-        public async Task<IReadOnlyList<Product>> GetAllAsync(int pageNumber =1 ,int take=11)
+        public async Task<IReadOnlyList<GetAllProductsDTO>> GetAllAsync(int pageNumber =1 ,int take=11)
         {
             var skip = (pageNumber - 1) * take;
-            //var sql = "SELECT p.Id, Name ,Price, Stock , pimg.Url FROM Products p INNER JOIN ProductImage pimg ON pimg.Id = ThumbnailId OFFSET @skip ROWS FETCH @take ROWS ONLY;";
-            var sql = "SELECT p.Id, Name ,Price, Stock , pimg.Url as ProductImg, p.TotalSold,s.ImageURL,s.FirstName,s.LastName FROM Products p INNER JOIN ProductImage pimg ON pimg.Id = ThumbnailId INNER JOIN AspNetUsers s ON s.Id = p.SellerId ORDER BY p.CreatedAt DESC OFFSET 10 ROWS FETCH NEXT 22 ROWS ONLY;";
+
+            var sql = @"SELECT p.Id, Name as ProductName ,Price, Stock , pimg.Url as ProductImg, p.TotalSold,
+                        s.ImageURL, CONCAT(s.FirstName,' ',s.LastName) as SellerFullName , AverageReviews.AverageScore FROM Products p 
+                        INNER JOIN ProductImage pimg ON pimg.Id = ThumbnailId 
+                        INNER JOIN AspNetUsers s ON s.Id = p.SellerId
+                        INNER JOIN (SELECT AVG(Score) as AverageScore , ProductID FROM Reviews GROUP BY ProductId) AS AverageReviews 
+                        on AverageReviews.ProductId = p.Id 
+                        ORDER BY p.CreatedAt DESC OFFSET @skip ROWS FETCH NEXT @take ROWS ONLY;";
+
             using var connection = _dapperContext.Connection;
-            IEnumerable<Product> products = await connection.QueryAsync<Product>(sql, new {skip,take});
+            IEnumerable<GetAllProductsDTO> products = await connection.QueryAsync<GetAllProductsDTO>(sql, new {skip,take});
             return products.ToList().AsReadOnly();
         }
     }
