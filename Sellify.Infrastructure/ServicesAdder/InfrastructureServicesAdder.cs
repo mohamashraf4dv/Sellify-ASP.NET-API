@@ -46,7 +46,6 @@ namespace Sellify.Infrastructure.ServicesAdder
             #region Scoped Services
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IJwtTokenService, JwtTokenService>();
-            services.AddScoped<IProductService, ProductService>();
             #endregion
             services.AddScoped<UserHelper>();
             return services;
