@@ -27,6 +27,9 @@ namespace Sellify.Infrastructure.ModelsConfigurations
 
             builder.HasOne(p => p.Seller)
                 .WithMany(p => p.Products).HasForeignKey(p => p.SellerId);
+
+            builder.HasMany(p=> p.Reviews)
+                .WithOne(r=>r.Product).HasForeignKey(r=>r.ProductId).OnDelete(DeleteBehavior.Restrict);
             #endregion
         }
     }

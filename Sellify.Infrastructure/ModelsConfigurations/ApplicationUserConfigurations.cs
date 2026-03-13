@@ -33,7 +33,7 @@ namespace Sellify.Infrastructure.ModelsConfigurations
                 .WithOne().HasForeignKey<Seller>(s => s.Id);
 
             builder.HasMany(u=> u.Reviews)
-                .WithOne().HasForeignKey(r=> r.ApplicationUserId);
+                .WithOne().HasForeignKey(r=> r.ApplicationUserId).OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
