@@ -24,7 +24,8 @@ namespace Sellify.Infrastructure.Implementations.Repositories
         public async Task<IReadOnlyList<Product>> GetAllAsync(int pageNumber =1 ,int take=11)
         {
             var skip = (pageNumber - 1) * take;
-            var sql = "SELECT p.Id, Name ,Price, Stock , pimg.Url FROM Products p INNER JOIN ProductImage pimg ON pimg.Id = ThumbnailId OFFSET @skip ROWS FETCH @take ROWS ONLY;";
+            //var sql = "SELECT p.Id, Name ,Price, Stock , pimg.Url FROM Products p INNER JOIN ProductImage pimg ON pimg.Id = ThumbnailId OFFSET @skip ROWS FETCH @take ROWS ONLY;";
+            var sql = "SELECT p.Id, Name ,Price, Stock , pimg.Url as ProductImg, p.TotalSold,s.ImageURL,s.FirstName,s.LastName FROM Products p INNER JOIN ProductImage pimg ON pimg.Id = ThumbnailId INNER JOIN AspNetUsers s ON s.Id = p.SellerId ORDER BY p.CreatedAt DESC OFFSET 10 ROWS FETCH NEXT 22 ROWS ONLY;";
             using var connection = _dapperContext.Connection;
             IEnumerable<Product> products = await connection.QueryAsync<Product>(sql, new {skip,take});
             return products.ToList().AsReadOnly();
