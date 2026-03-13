@@ -1,7 +1,5 @@
-﻿
-namespace Sellify.Application.Features.Products.Command.SellerAddProduct
+﻿namespace Sellify.Application.Features.Products.Command.SellerAddProduct
 {
-    public class SellerAddProductCommand
-    {
-    }
+    public record SellerAddProductCommand(SellerProductDTO product) : IRequest<GenericResultDTO>;
+
 }

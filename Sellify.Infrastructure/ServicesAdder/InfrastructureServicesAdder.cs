@@ -1,5 +1,7 @@
 ﻿
 
+using Sellify.Infrastructure.Implementations;
+
 namespace Sellify.Infrastructure.ServicesAdder
 {
     public static class InfrastructureServicesAdder
@@ -46,6 +48,7 @@ namespace Sellify.Infrastructure.ServicesAdder
             #region Scoped Services
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IJwtTokenService, JwtTokenService>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             #endregion
             services.AddScoped<UserHelper>();
             return services;
