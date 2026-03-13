@@ -11,5 +11,8 @@
         public string ImageURL { get; set; }
         //---- Navigation User
         public Seller? Seller { get; set; }
+
+        // Each Application user Writes Many Reviews
+        public ICollection<Review> Reviews { get; set; } = new HashSet<Review>();
     }
 }

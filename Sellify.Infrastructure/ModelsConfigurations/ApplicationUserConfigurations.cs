@@ -31,6 +31,9 @@ namespace Sellify.Infrastructure.ModelsConfigurations
 
             builder.HasOne(u => u.Seller)
                 .WithOne().HasForeignKey<Seller>(s => s.Id);
+
+            builder.HasMany(u=> u.Reviews)
+                .WithOne().HasForeignKey(r=> r.ApplicationUserId);
         }
     }
 }
