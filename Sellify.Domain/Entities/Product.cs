@@ -18,9 +18,22 @@ namespace Sellify.Domain.Entities
         public bool IsDeleted { get; set; } = false;
         public DateTime? DeletedAt { get; set; }
 
+        public Guid RowVersion { get; set; }
+
+        public decimal TotalSold { get; set; }
+
+        // -- Navigation Properties -- //
+
+        //Each Product Have Many Product Images 
         public ICollection<ProductImage> ProductImages { get; set; } = new HashSet<ProductImage>();
 
+        //Each Product have one Thumbnail
         public ProductImage? Thumbnail { get; set; }
         public Guid? ThumbnailId { get; set; }
+
+        //Each Product have one Seller
+        public Seller Seller { get; set; }
+        public string SellerId { get; set; }
+
     }
 }

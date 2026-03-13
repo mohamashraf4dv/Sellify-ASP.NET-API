@@ -183,15 +183,29 @@ namespace Sellify.Infrastructure.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<Guid>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("SellerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<long>("Stock")
                         .HasColumnType("bigint");
 
                     b.Property<Guid?>("ThumbnailId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<decimal>("TotalSold")
+                        .HasColumnType("decimal(18,2)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Name");
+
+                    b.HasIndex("SellerId");
 
                     b.HasIndex("ThumbnailId")
                         .IsUnique()
@@ -222,6 +236,22 @@ namespace Sellify.Infrastructure.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductImage");
+                });
+
+            modelBuilder.Entity("Sellify.Domain.Entities.Seller", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("TotalEarned")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Seller");
                 });
 
             modelBuilder.Entity("Sellify.Infrastructure.IdentityUserModel.ApplicationUser", b =>
@@ -357,9 +387,17 @@ namespace Sellify.Infrastructure.Migrations
 
             modelBuilder.Entity("Sellify.Domain.Entities.Product", b =>
                 {
+                    b.HasOne("Sellify.Domain.Entities.Seller", "Seller")
+                        .WithMany("Products")
+                        .HasForeignKey("SellerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Sellify.Domain.Entities.ProductImage", "Thumbnail")
                         .WithOne()
                         .HasForeignKey("Sellify.Domain.Entities.Product", "ThumbnailId");
+
+                    b.Navigation("Seller");
 
                     b.Navigation("Thumbnail");
                 });
@@ -375,9 +413,28 @@ namespace Sellify.Infrastructure.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("Sellify.Domain.Entities.Seller", b =>
+                {
+                    b.HasOne("Sellify.Infrastructure.IdentityUserModel.ApplicationUser", null)
+                        .WithOne("Seller")
+                        .HasForeignKey("Sellify.Domain.Entities.Seller", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Sellify.Domain.Entities.Product", b =>
                 {
                     b.Navigation("ProductImages");
+                });
+
+            modelBuilder.Entity("Sellify.Domain.Entities.Seller", b =>
+                {
+                    b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("Sellify.Infrastructure.IdentityUserModel.ApplicationUser", b =>
+                {
+                    b.Navigation("Seller");
                 });
 #pragma warning restore 612, 618
         }

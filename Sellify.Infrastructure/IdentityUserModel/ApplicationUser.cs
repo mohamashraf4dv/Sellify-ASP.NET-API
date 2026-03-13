@@ -7,5 +7,8 @@
         public string LastName { get; set; }
         public string FullName => $"{FirstName} {LastName}";
         public int Age => DateTime.Now.Year - DateOfBirth.Year;
+
+        //---- Navigation User
+        public Seller? Seller { get; set; }
     }
 }
