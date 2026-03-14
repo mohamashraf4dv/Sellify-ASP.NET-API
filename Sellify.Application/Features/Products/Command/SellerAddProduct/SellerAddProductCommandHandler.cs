@@ -16,8 +16,10 @@ namespace Sellify.Application.Features.Products.Command.SellerAddProduct
         public async Task<GenericResultDTO> Handle(SellerAddProductCommand request, CancellationToken cancellationToken)
         {
             //_productRepository.CreateAsync()
+            Product product = request.product;
+            await _productRepository.CreateAsync(product, cancellationToken);
             await _unitOfWork.SaveChangesAsync();
-            throw new NotImplementedException();
+            return new GenericResultDTO(product, 201);
         }
     }
 }

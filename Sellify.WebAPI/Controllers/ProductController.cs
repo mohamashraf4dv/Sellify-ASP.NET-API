@@ -25,8 +25,9 @@ namespace Sellify.WebAPI.Controllers
             return await _mediator.Send(new GetAllProductsQuery(page, number));
         }
         [HttpPost]
-        public async Task<ActionResult<GenericResultDTO>> CreateNew(SellerProductDTO product)
+        public async Task<ActionResult<GenericResultDTO>> CreateNew(SellerProductDTO productDto)
         {
+            Product product = ProductMapper.SellerProductDtoToProduct(productDto);
             return await _mediator.Send(new SellerAddProductCommand(product));
         }
         //[HttpPost("TestProduct")]
