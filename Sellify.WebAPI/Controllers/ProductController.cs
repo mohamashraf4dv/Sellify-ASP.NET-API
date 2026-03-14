@@ -30,11 +30,6 @@ namespace Sellify.WebAPI.Controllers
             Product product = ProductMapper.SellerProductDtoToProduct(productDto);
             return await _mediator.Send(new SellerAddProductCommand(product));
         }
-        //[HttpPost("TestProduct")]
-        //public async Task<ActionResult<Product>> CreateNewTest(SellerProductDTO product)
-        //{
-        //    Product product1 = ProductMapper.SellerProductDtoToProduct(product);
-        //    return product1;
-        //}
+
     }
 }
