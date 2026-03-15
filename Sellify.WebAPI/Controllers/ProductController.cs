@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Sellify.Application.Features.Products.Command.SellerAddProduct;
@@ -30,6 +31,15 @@ namespace Sellify.WebAPI.Controllers
             Product product = ProductMapper.SellerProductDtoToProduct(productDto);
             return await _mediator.Send(new SellerAddProductCommand(product));
         }
+
+        [Authorize]
+        [HttpGet("test")]
+        public async Task<ActionResult> Test()
+        {
+
+            return Ok("Your signedIn");
+        }
+
 
     }
 }

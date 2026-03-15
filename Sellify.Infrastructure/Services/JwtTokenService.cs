@@ -53,10 +53,9 @@ namespace Sellify.Infrastructure.Services
         private async Task<IEnumerable<Claim>> GetClaims(ApplicationUser applicationUser,bool isPersistence)
         {
 
-            var userRoles = _userManager.GetRolesAsync(applicationUser);
-            var userClaims = _userManager.GetClaimsAsync(applicationUser);
+            var userRoles =  await _userManager.GetRolesAsync(applicationUser);
+            var userClaims = await  _userManager.GetClaimsAsync(applicationUser);
 
-            await Task.WhenAll(userClaims, userRoles);
             IEnumerable<Claim> claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
@@ -64,11 +63,13 @@ namespace Sellify.Infrastructure.Services
                 new Claim(JwtRegisteredClaimNames.Email,applicationUser.Email),
                 new Claim(ClaimTypes.IsPersistent, isPersistence.ToString().ToLower())
             }
-            .Union(userRoles.Result.Select(role => new Claim(ClaimTypes.Role, role)))
-            .Union(userClaims.Result);
+            .Union(userRoles.Select(role => new Claim(ClaimTypes.Role, role)))
+            .Union(userClaims);
 
             return claims;
 
         }
+
+        
     }
 }

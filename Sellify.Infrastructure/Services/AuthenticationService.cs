@@ -63,7 +63,7 @@ namespace Sellify.Infrastructure.Services
                 }
                 string jwtToken = await _jwtTokenService.CreateJwtToken(userLoginDTO.LoginIdentifier,userLoginDTO.IsPersistence);
                 _logger.LogInformation("User {LoginIdentifier} logged in successfully.", userLoginDTO.LoginIdentifier);
-                return new GenericResultDTO(data: new { Token = jwtToken }, statusCode: StatusCodes.Status202Accepted);
+                return new GenericResultDTO(data:  jwtToken , statusCode: StatusCodes.Status202Accepted);
 
             }
         private Dictionary<string,HashSet<string>> GetIdentityErrors(IEnumerable<IdentityError> identityErrors)

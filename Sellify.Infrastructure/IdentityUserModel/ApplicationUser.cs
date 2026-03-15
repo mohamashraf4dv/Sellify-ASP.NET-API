@@ -14,5 +14,8 @@
 
         // Each Application user Writes Many Reviews
         public ICollection<Review> Reviews { get; set; } = new HashSet<Review>();
+
+        // Each Application User have Exactly one Token that gets updates eventually
+        public Token Token { get; set; }
     }
 }

@@ -29,11 +29,16 @@ namespace Sellify.Infrastructure.ModelsConfigurations
                 .HasMaxLength(50);
             #endregion
 
+            #region Relationships
+
             builder.HasOne(u => u.Seller)
                 .WithOne().HasForeignKey<Seller>(s => s.Id);
 
-            builder.HasMany(u=> u.Reviews)
-                .WithOne().HasForeignKey(r=> r.ApplicationUserId).OnDelete(DeleteBehavior.Restrict);
+            builder.HasMany(u => u.Reviews)
+                .WithOne().HasForeignKey(r => r.ApplicationUserId).OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(au => au.Token).WithOne().HasForeignKey<Token>(t => t.ApplicationUserId);
+            #endregion
         }
     }
 }

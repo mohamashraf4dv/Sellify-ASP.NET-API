@@ -32,6 +32,17 @@ namespace Sellify.WebAPI.Controllers
             var result = await _mediator.Send(new InternalUserLoginCommand() { userLoginDTO = userLoginDTO });
             return StatusCode(result.statusCode, result);
         }
-
+        [HttpPost("test-login")]
+        public async Task<ActionResult> InternalLoginTest([FromBody] InternalUserLoginDTO userLoginDTO)
+        {
+            var result = await _mediator.Send(new InternalUserLoginCommand() { userLoginDTO = userLoginDTO });
+            Response.Cookies.Append("bearer",result.data,new CookieOptions { 
+                HttpOnly=true ,
+                Secure=true,
+                SameSite=SameSiteMode.None,
+                Expires=DateTimeOffset.UtcNow.AddHours(1)});
+            
+            return StatusCode(result.statusCode, new GenericResultDTO(null,201));
+        }
     }
 }

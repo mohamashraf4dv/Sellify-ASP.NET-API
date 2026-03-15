@@ -6,8 +6,8 @@
         {
             RuleFor(x=>x.userLoginDTO.LoginIdentifier).NotEmpty().WithMessage("LoginIdentifer cannot be Empty");
             RuleFor(x => x.userLoginDTO.IsPersistence).NotEmpty().WithMessage("Rememberme shouldn't be empty");
-            RuleFor(x => x.userLoginDTO.Password).NotEmpty().WithMessage("Password cannot be empty");
-            RuleFor(x => x.userLoginDTO.Password).Length(6).WithMessage("Password cannot be less than 6 character");
+            RuleFor(x => x.userLoginDTO.Password).NotEmpty().WithMessage("Password cannot be empty")
+            .MinimumLength(6).WithMessage("Password cannot be less than 6 character");
         }
     }
 }

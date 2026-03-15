@@ -21,7 +21,7 @@ namespace Sellify.Infrastructure.ServicesAdder
                 o.Password.RequireDigit = false;
                 o.Password.RequireNonAlphanumeric = false;
                 o.Password.RequireLowercase = false;
-                                }).AddEntityFrameworkStores<SellifyMicrosoftSqlContext>();
+                                }).AddRoles<IdentityRole>().AddEntityFrameworkStores<SellifyMicrosoftSqlContext>();
 
             services.AddAuthentication(o =>
             {
@@ -29,14 +29,12 @@ namespace Sellify.Infrastructure.ServicesAdder
                 o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(o =>
             {
-                
                 o.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
                     ValidIssuer = configuration["Jwt:Issuer"],
                     ValidateAudience = true,
                     ValidAudience = configuration["Jwt:Audience"],
-
                     ValidateLifetime = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:SecretKey"])),
                 };
