@@ -45,7 +45,7 @@ namespace Sellify.Infrastructure.Services
             JwtSecurityToken jwtSecurityToken = await GenerateJwtSecurityToken(applicationUser);
             string jwtToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
 
-            DateTime expirationDate = isPersistence ? DateTime.UtcNow.AddDays(30) : DateTime.UtcNow.AddDays(1);
+            DateTime expirationDate = isPersistence ? DateTime.UtcNow.AddDays(30) : DateTime.UtcNow.AddMinutes(10);
             Token existedToken = await _tokenRepository.GetTokenByUserIdAsync(applicationUser.Id);
             string refreshToken = Guid.NewGuid().ToString();
 
@@ -109,6 +109,7 @@ namespace Sellify.Infrastructure.Services
                 ValidAudience = _configuration["Jwt:Audience"],
                 ValidateLifetime = validateLifeTime,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:SecretKey"])),
+                ClockSkew = TimeSpan.Zero
             });
             if (!result.IsValid)
                 return false;

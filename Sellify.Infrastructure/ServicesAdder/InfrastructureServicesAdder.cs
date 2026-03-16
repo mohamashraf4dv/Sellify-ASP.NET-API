@@ -37,6 +37,7 @@ namespace Sellify.Infrastructure.ServicesAdder
                     ValidAudience = configuration["Jwt:Audience"],
                     ValidateLifetime = true,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:SecretKey"])),
+                    ClockSkew= TimeSpan.Zero
                 };
             });
             #region Scoped Repositories

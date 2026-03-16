@@ -1,16 +1,18 @@
 ﻿
+using Sellify.Application.Features.Token.Query.GetToken;
+
 namespace Sellify.Application.Features.Authentication.Commands.UserRegisteration
 {
-    public class UserRegisterationCommandHandler : IRequestHandler<UserRegisterationCommand, GenericResultDTO>
+    public class UserRegisterationCommandHandler : IRequestHandler<UserRegisterationCommand, GenericResultDTO<TokensDTO>>
     {
         private readonly IAuthenticationService _authenticationService;
         public UserRegisterationCommandHandler(IAuthenticationService authenticationService)
         {
             this._authenticationService = authenticationService;
         }
-        public async Task<GenericResultDTO> Handle(UserRegisterationCommand request, CancellationToken cancellationToken)
+        public async Task<GenericResultDTO<TokensDTO>> Handle(UserRegisterationCommand request, CancellationToken cancellationToken)
         {
-            GenericResultDTO result = await _authenticationService.Register(request.userRegisteration);
+            GenericResultDTO<TokensDTO> result = await _authenticationService.Register(request.userRegisteration);
             return result;
         }
     

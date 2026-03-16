@@ -1,6 +1,8 @@
-﻿namespace Sellify.Application.Features.Authentication.Commands.UserRegisteration
+﻿using Sellify.Application.Features.Token.Query.GetToken;
+
+namespace Sellify.Application.Features.Authentication.Commands.UserRegisteration
 {
-    public class UserRegisterationCommand: IRequest<GenericResultDTO>
+    public class UserRegisterationCommand: IRequest<GenericResultDTO<TokensDTO>>
     {
         public UserRegisterationDTO userRegisteration { get; init; }
     }

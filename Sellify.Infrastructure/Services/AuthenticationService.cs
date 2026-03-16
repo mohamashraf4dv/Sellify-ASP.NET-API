@@ -7,6 +7,7 @@ using Sellify.Application.Global;
 using Sellify.Infrastructure.Mapperly;
 using Sellify.Application.Contracts.Services;
 using Sellify.Infrastructure.ServicesHelper;
+using Sellify.Application.Features.Token.Query.GetToken;
 
 namespace Sellify.Infrastructure.Services
 {
@@ -24,7 +25,26 @@ namespace Sellify.Infrastructure.Services
                 _logger = logger;
             this._userHelper = userHelper;
         }
-        public async Task<GenericResultDTO> Register(UserRegisterationDTO user)
+        //public async Task<GenericResultDTO> Register(UserRegisterationDTO user)
+        //{
+
+        //    ApplicationUser applicationUser = ApplicationUserMapper.UserRegisterationDtoToApplicationUser(user);
+
+        //    IdentityResult userCreationResult = await _userManager.CreateAsync(applicationUser, user.Password);
+
+        //    int statusCode = userCreationResult.Succeeded ? StatusCodes.Status201Created : StatusCodes.Status400BadRequest;
+
+        //    if (!userCreationResult.Succeeded)
+        //    {
+        //        var errors = GetIdentityErrors(userCreationResult.Errors);
+        //        return new GenericResultDTO(new { userCreationResult }, statusCode, errorsKeyValues: errors);
+
+        //    }
+
+        //     string jwtToken = await _jwtTokenService.CreateJwtToken(applicationUser.Email!);
+        //     return new GenericResultDTO(new { Token = jwtToken }, statusCode);
+        //}
+        public async Task<GenericResultDTO<TokensDTO>> Register(UserRegisterationDTO user)
         {
 
             ApplicationUser applicationUser = ApplicationUserMapper.UserRegisterationDtoToApplicationUser(user);
@@ -36,12 +56,11 @@ namespace Sellify.Infrastructure.Services
             if (!userCreationResult.Succeeded)
             {
                 var errors = GetIdentityErrors(userCreationResult.Errors);
-                return new GenericResultDTO(new { userCreationResult }, statusCode, errorsKeyValues: errors);
-
+                return new GenericResultDTO<TokensDTO>(null, statusCode, errorsKeyValues: errors);
             }
 
-             string jwtToken = await _jwtTokenService.CreateJwtToken(applicationUser.Email!);
-             return new GenericResultDTO(new { Token = jwtToken }, statusCode);
+            TokensDTO token = await _jwtTokenService.GenerateTokens(applicationUser.Email!);
+            return new GenericResultDTO<TokensDTO>(token, statusCode);
         }
         public async Task<GenericResultDTO> InternalLogin(InternalUserLoginDTO userLoginDTO)
             {
