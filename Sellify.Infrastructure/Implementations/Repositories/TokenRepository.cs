@@ -11,7 +11,7 @@ namespace Sellify.Infrastructure.Implementations.Repositories
             this._context = context;
         }
 
-        public async Task<bool> AreTokensValid(TokensDTO tokensDTO, CancellationToken cancellationToken = default)
+        public async Task<bool> AreTokensExistInDbAsync(TokensDTO tokensDTO, CancellationToken cancellationToken = default)
         {
           var token = await  _context.Tokens.SingleOrDefaultAsync(t=> t.RefreshToken == tokensDTO.RefreshToken && t.AccessToken == tokensDTO.AccessToken &&  !t.IsRevoked && !t.IsExpired);
             return (token is null)? false : true;
@@ -23,6 +23,12 @@ namespace Sellify.Infrastructure.Implementations.Repositories
 
             return (state.State == EntityState.Added)? entity: null;
         }
+
+        public async Task<Token> GetTokenByRefreshTokenAsync(string refreshToken, CancellationToken cancellationToken = default)
+        {
+            return await _context.Tokens.FirstOrDefaultAsync(t => t.RefreshToken == refreshToken, cancellationToken);
+        }
+
         public async Task<Token> GetTokenByUserIdAsync(string userId, CancellationToken cancellationToken = default)
         {
             return await _context.Tokens.FirstOrDefaultAsync(t=> t.ApplicationUserId== userId, cancellationToken);
