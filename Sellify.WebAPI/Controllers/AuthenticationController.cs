@@ -26,12 +26,7 @@ namespace Sellify.WebAPI.Controllers
             var result = await _mediator.Send(new UserRegisterationCommand() { userRegisteration = userRegisterationDTO });
             return StatusCode(result.statusCode,result);
         }
-        [HttpPost("old-login")]
-        public async Task<ActionResult> InternalLogin([FromBody] InternalUserLoginDTO userLoginDTO)
-        {
-            var result = await _mediator.Send(new InternalUserLoginCommand() { userLoginDTO = userLoginDTO });
-            return StatusCode(result.statusCode, result);
-        }
+
         [HttpPost("login")]
         public async Task<ActionResult> InternalLoginTest([FromBody] InternalUserLoginDTO userLoginDTO)
         {
