@@ -1,6 +1,7 @@
 ﻿
 using Sellify.Application.Contracts.Repositories;
-using Sellify.Application.Features.Token.Query.GetToken;
+using Sellify.Application.Features.Token;
+
 
 namespace Sellify.Application.Contracts.Services
 {

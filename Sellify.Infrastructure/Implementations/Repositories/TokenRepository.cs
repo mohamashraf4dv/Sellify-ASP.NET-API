@@ -1,4 +1,4 @@
-﻿using Sellify.Application.Features.Token.Query.GetToken;
+﻿using Sellify.Application.Features.Token;
 
 namespace Sellify.Infrastructure.Implementations.Repositories
 {
@@ -13,7 +13,7 @@ namespace Sellify.Infrastructure.Implementations.Repositories
 
         public async Task<bool> AreTokensExistInDbAsync(TokensDTO tokensDTO, CancellationToken cancellationToken = default)
         {
-          var token = await  _context.Tokens.SingleOrDefaultAsync(t=> t.RefreshToken == tokensDTO.RefreshToken && t.AccessToken == tokensDTO.AccessToken &&  !t.IsRevoked && !t.IsExpired);
+          var token = await  _context.Tokens.SingleOrDefaultAsync(t=> t.RefreshToken == tokensDTO.RefreshToken && t.AccessToken == tokensDTO.AccessToken);
             return (token is null)? false : true;
         }
 

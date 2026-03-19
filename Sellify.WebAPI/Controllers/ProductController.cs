@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Sellify.Application.Contracts.Services;
 using Sellify.Application.Features.Products.Command.SellerAddProduct;
 using Sellify.Application.Features.Products.Query.GetAllProducts;
 using Sellify.Application.Global;
@@ -15,10 +16,12 @@ namespace Sellify.WebAPI.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly IJwtTokenService _jwtTokenService;
 
-        public ProductController(IMediator mediator)
+        public ProductController(IMediator mediator,IJwtTokenService jwtTokenService)
         {
             this._mediator = mediator;
+            this._jwtTokenService = jwtTokenService;
         }
         [HttpGet]
         public async Task<ActionResult<GenericResultDTO>> GetAll([FromQuery] int page = 1, [FromQuery] int number = 11)
@@ -39,7 +42,13 @@ namespace Sellify.WebAPI.Controllers
 
             return Ok("Your signedIn");
         }
+        [HttpGet("Update")]
+        public async Task<ActionResult> Update([FromQuery] string refreshToken)
+        {
 
+            var token = await _jwtTokenService.UpdateExistingAccessToken(refreshToken);
+            return Ok(token);
+        }
 
     }
 }

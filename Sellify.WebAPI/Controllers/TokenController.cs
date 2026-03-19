@@ -1,7 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Mvc;
-using Sellify.Application.Features.Token.Query.GetToken;
+using Sellify.Application.Features.Token.Commands.RevokeToken;
+using Sellify.Application.Features.Token.Commands.UpdateAccessToken;
 
 namespace Sellify.WebAPI.Controllers
 {
@@ -22,12 +24,26 @@ namespace Sellify.WebAPI.Controllers
             return Ok();
         }
 
-        [HttpGet]
-        public async Task<ActionResult> GetTokens() 
+        [HttpPost("refresh")]
+        public async Task<ActionResult> RefreshToken() 
         {
             string refreshToken = Request.Cookies?["bearer"];
-            var result = await _mediator.Send(new GetTokensQuery(refreshToken,"ssas"));
-            return Ok();
+            if (refreshToken is null)
+                return BadRequest();
+            var result = await _mediator.Send(new UpdateAccessTokenCommand(refreshToken));
+            return StatusCode(result.statusCode,new {token= result.data?.AccessToken?? ""});
+        }
+        [HttpPost("revoke")]
+        public async Task<ActionResult> RevokeToken()
+        {
+            string refreshToken = Request.Cookies?["bearer"];
+            var result = await _mediator.Send(new RevokeTokenCommand(refreshToken));
+            Response.Cookies.Delete("bearer", new CookieOptions {
+                HttpOnly = true ,
+                Secure = true,
+                SameSite = SameSiteMode.None,
+                });
+            return StatusCode(result.statusCode);
         }
     }
 }

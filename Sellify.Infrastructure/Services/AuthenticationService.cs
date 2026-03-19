@@ -7,7 +7,7 @@ using Sellify.Application.Global;
 using Sellify.Infrastructure.Mapperly;
 using Sellify.Application.Contracts.Services;
 using Sellify.Infrastructure.ServicesHelper;
-using Sellify.Application.Features.Token.Query.GetToken;
+using Sellify.Application.Features.Token;
 
 namespace Sellify.Infrastructure.Services
 {
@@ -62,7 +62,7 @@ namespace Sellify.Infrastructure.Services
             TokensDTO token = await _jwtTokenService.GenerateTokens(applicationUser.Email!);
             return new GenericResultDTO<TokensDTO>(token, statusCode);
         }
-        public async Task<GenericResultDTO> InternalLogin(InternalUserLoginDTO userLoginDTO)
+        public async Task<GenericResultDTO<TokensDTO>> InternalLogin(InternalUserLoginDTO userLoginDTO)
             {
                 ApplicationUser? user = await _userHelper.GetUserByLoginIdentifer(userLoginDTO.LoginIdentifier);
 
@@ -70,7 +70,7 @@ namespace Sellify.Infrastructure.Services
                 {
                     _logger.LogInformation("User {LoginIdentifier} tried to login but is not in our database", userLoginDTO.LoginIdentifier);
 
-                    return new GenericResultDTO(data: null, statusCode: StatusCodes.Status404NotFound, errorsKeyValues: new Dictionary<string, HashSet<string>> { { "Credentials", new HashSet<string> { "invalid credentials" } } });
+                    return new GenericResultDTO<TokensDTO>(data: null, statusCode: StatusCodes.Status404NotFound, errorsKeyValues: new Dictionary<string, HashSet<string>> { { "Credentials", new HashSet<string> { "invalid credentials" } } });
                 }
                 bool isPasswordValid = _userManager.CheckPasswordAsync(user, userLoginDTO.Password).Result;
 
@@ -78,11 +78,11 @@ namespace Sellify.Infrastructure.Services
                 {
                     _logger.LogInformation("User {LoginIdentifier} tried to login with invalid password.", userLoginDTO.LoginIdentifier);
 
-                    return new GenericResultDTO(data: null, statusCode: StatusCodes.Status400BadRequest, errorsKeyValues: new Dictionary<string, HashSet<string>> { { "Credentials", new HashSet<string> { "invalid credentials" } } });
+                    return new GenericResultDTO<TokensDTO>(data: null, statusCode: StatusCodes.Status400BadRequest, errorsKeyValues: new Dictionary<string, HashSet<string>> { { "Credentials", new HashSet<string> { "invalid credentials" } } });
                 }
-                string jwtToken = await _jwtTokenService.CreateJwtToken(userLoginDTO.LoginIdentifier,userLoginDTO.IsPersistence);
+                var jwtToken = await _jwtTokenService.GenerateTokens(userLoginDTO.LoginIdentifier,userLoginDTO.IsPersistence);
                 _logger.LogInformation("User {LoginIdentifier} logged in successfully.", userLoginDTO.LoginIdentifier);
-                return new GenericResultDTO(data:  jwtToken , statusCode: StatusCodes.Status202Accepted);
+                return new GenericResultDTO<TokensDTO>(data:  jwtToken , statusCode: StatusCodes.Status202Accepted);
 
             }
         private Dictionary<string,HashSet<string>> GetIdentityErrors(IEnumerable<IdentityError> identityErrors)

@@ -1,5 +1,6 @@
 ﻿
-using Sellify.Application.Features.Token.Query.GetToken;
+
+using Sellify.Application.Features.Token;
 
 namespace Sellify.Application.Features.Authentication.Commands.UserRegisteration
 {

@@ -1,8 +1,5 @@
-﻿
-using Sellify.Application.Contracts.Services;
-using Sellify.Application.Features.Token.Query.GetToken;
+﻿using Sellify.Application.Features.Token;
 using Sellify.Application.Global;
-using Sellify.Infrastructure.ServicesHelper;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
@@ -154,6 +151,8 @@ namespace Sellify.Infrastructure.Services
                 new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Sid, applicationUser.Id),
                 new Claim(JwtRegisteredClaimNames.Email,applicationUser.Email),
+                new Claim(JwtRegisteredClaimNames.Name,applicationUser.FullName),
+                new Claim(JwtRegisteredClaimNames.Picture,applicationUser.ImageURL?? ""),
                 new Claim(ClaimTypes.IsPersistent, isPersistence.ToString().ToLower())
             }
             .Union(userRoles.Select(role => new Claim(ClaimTypes.Role, role)))
