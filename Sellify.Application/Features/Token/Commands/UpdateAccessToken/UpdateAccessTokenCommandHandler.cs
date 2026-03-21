@@ -2,9 +2,9 @@
 {
     public class UpdateAccessTokenCommandHandler : IRequestHandler<UpdateAccessTokenCommand, GenericResultDTO<TokensDTO>>
     {
-        private readonly IJwtTokenService _tokenService;
+        private readonly ITokenService _tokenService;
 
-        public UpdateAccessTokenCommandHandler(IJwtTokenService tokenService)
+        public UpdateAccessTokenCommandHandler(ITokenService tokenService)
         {
             this._tokenService = tokenService;
         }

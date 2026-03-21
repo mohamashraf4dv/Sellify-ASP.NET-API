@@ -8,6 +8,5 @@ namespace Sellify.Application.Contracts.Repositories
         public Task<Token> GetTokenByUserIdAsync(string userId, CancellationToken cancellationToken=default);
         public Task<Token> GetTokenByRefreshTokenAsync(string refreshToken, CancellationToken cancellationToken=default);
         public Task<bool> AreTokensExistInDbAsync(TokensDTO tokensDTO, CancellationToken cancellationToken=default);
-        
     }
 }

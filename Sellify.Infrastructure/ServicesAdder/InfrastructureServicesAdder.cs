@@ -14,6 +14,7 @@ namespace Sellify.Infrastructure.ServicesAdder
             {
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             });
+
             services.AddIdentityCore<ApplicationUser>(o=> {
                 o.Password.RequiredUniqueChars = 0;
                 o.Password.RequiredLength = 6;
@@ -42,12 +43,14 @@ namespace Sellify.Infrastructure.ServicesAdder
             });
             #region Scoped Repositories
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ITokenRepository, TokenRepository>();
             #endregion
 
             #region Scoped Services
             services.AddScoped<IAuthenticationService, AuthenticationService>();
-            services.AddScoped<IJwtTokenService, JwtTokenService>();
+            services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             #endregion
             services.AddScoped<UserHelper>();

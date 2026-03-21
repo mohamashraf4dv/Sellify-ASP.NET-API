@@ -16,9 +16,9 @@ namespace Sellify.WebAPI.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly IJwtTokenService _jwtTokenService;
+        private readonly ITokenService _jwtTokenService;
 
-        public ProductController(IMediator mediator,IJwtTokenService jwtTokenService)
+        public ProductController(IMediator mediator,ITokenService jwtTokenService)
         {
             this._mediator = mediator;
             this._jwtTokenService = jwtTokenService;

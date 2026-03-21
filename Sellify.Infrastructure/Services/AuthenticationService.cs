@@ -14,11 +14,11 @@ namespace Sellify.Infrastructure.Services
     public class AuthenticationService:IAuthenticationService
     {
             private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IJwtTokenService _jwtTokenService;
+        private readonly ITokenService _jwtTokenService;
             private readonly ILogger<AuthenticationService> _logger;
         private readonly UserHelper _userHelper;
 
-        public AuthenticationService( UserManager<ApplicationUser> userManager, IJwtTokenService jwtTokenService, ILogger<AuthenticationService> logger, UserHelper userHelper)
+        public AuthenticationService( UserManager<ApplicationUser> userManager, ITokenService jwtTokenService, ILogger<AuthenticationService> logger, UserHelper userHelper)
             {
                 this._userManager = userManager;
             this._jwtTokenService = jwtTokenService;

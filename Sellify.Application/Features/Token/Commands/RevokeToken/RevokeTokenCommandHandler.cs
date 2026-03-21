@@ -2,9 +2,9 @@
 {
     public class RevokeTokenCommandHandler : IRequestHandler<RevokeTokenCommand, GenericResultDTO>
     {
-        private readonly IJwtTokenService _tokenService;
+        private readonly ITokenService _tokenService;
 
-        public RevokeTokenCommandHandler(IJwtTokenService tokenService)
+        public RevokeTokenCommandHandler(ITokenService tokenService)
         {
             this._tokenService = tokenService;
         }

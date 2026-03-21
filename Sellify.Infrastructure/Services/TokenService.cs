@@ -5,7 +5,7 @@ using System.Security.Claims;
 
 namespace Sellify.Infrastructure.Services
 {
-    public class JwtTokenService:IJwtTokenService
+    public class TokenService:ITokenService
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IConfiguration _configuration;
@@ -13,7 +13,7 @@ namespace Sellify.Infrastructure.Services
         private readonly ITokenRepository _tokenRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public JwtTokenService(UserManager<ApplicationUser> userManager, IConfiguration configuration,UserHelper userHelper,ITokenRepository tokenRepository,IUnitOfWork unitOfWork)
+        public TokenService(UserManager<ApplicationUser> userManager, IConfiguration configuration,UserHelper userHelper,ITokenRepository tokenRepository,IUnitOfWork unitOfWork)
         {
             this._userManager = userManager;
             this._configuration = configuration;
@@ -139,7 +139,6 @@ namespace Sellify.Infrastructure.Services
             return new GenericResultDTO( null, 200 );
         }
 
-
         private async Task<IEnumerable<Claim>> GetClaims(ApplicationUser applicationUser,bool isPersistence=false)
         {
 
@@ -202,6 +201,9 @@ namespace Sellify.Infrastructure.Services
             return applicationUser;
         }
 
-
+        public async Task<Token> GetTokenByRefreshTokenAsync(string refreshToken, CancellationToken cancellationToken = default)
+        {
+            return await _tokenRepository.GetTokenByRefreshTokenAsync(refreshToken);
+        }
     }
 }
