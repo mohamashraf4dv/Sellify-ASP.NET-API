@@ -1,4 +1,5 @@
 ﻿using Riok.Mapperly.Abstractions;
+using Sellify.Application.Features.Authentication.Commands.UpdateUserProfile;
 using Sellify.Application.Features.Authentication.Commands.UserRegisteration;
 
 namespace Sellify.Infrastructure.Mapperly
@@ -7,5 +8,7 @@ namespace Sellify.Infrastructure.Mapperly
     public static partial class ApplicationUserMapper
     {
         public static partial ApplicationUser UserRegisterationDtoToApplicationUser(UserRegisterationDTO userRegisterationDTO);
+        //public static partial ApplicationUser UpdateUserProfileToApplicationUser(UpdateUserProfileDTO updateUserProfileDTO);
+        public static partial void UpdateUserProfileToApplicationUser(UpdateUserProfileDTO updateUserProfileDTO, ApplicationUser applicationUser);
     }
 }

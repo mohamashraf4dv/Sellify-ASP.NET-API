@@ -43,7 +43,6 @@ namespace Sellify.Infrastructure.ServicesAdder
             });
             #region Scoped Repositories
             services.AddScoped<IProductRepository, ProductRepository>();
-            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ITokenRepository, TokenRepository>();
             #endregion
 

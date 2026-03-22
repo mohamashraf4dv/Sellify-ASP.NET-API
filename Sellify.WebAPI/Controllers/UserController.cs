@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Sellify.Application.Features.Authentication.Commands.UpdateUserProfile;
 using Sellify.Application.Features.Authentication.Query.GetUserProfile;
 using Sellify.Application.Global;
 
@@ -21,6 +22,12 @@ namespace Sellify.WebAPI.Controllers
         {
             var refreshToken = Request.Cookies?["bearer"];
            return await _mediator.Send(new GetUserProfileQuery(refreshToken));
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<GenericResultDTO>> UpdateUserProfile(UpdateUserProfileDTO updateUserProfileDTO)
+        {
+            return await _mediator.Send(new UpdateUserProfileCommand(updateUserProfileDTO));
         }
     }
 }

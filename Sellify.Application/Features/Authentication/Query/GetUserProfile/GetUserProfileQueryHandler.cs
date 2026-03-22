@@ -5,15 +5,15 @@ namespace Sellify.Application.Features.Authentication.Query.GetUserProfile
 {
     public class GetUserProfileQueryHandler : IRequestHandler<GetUserProfileQuery, GenericResultDTO>
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUserService _userService;
 
-        public GetUserProfileQueryHandler(IUserRepository userRepository)
+        public GetUserProfileQueryHandler(IUserService userService)
         {
-            this._userRepository = userRepository;
+            this._userService = userService;
         }
         public async Task<GenericResultDTO> Handle(GetUserProfileQuery request, CancellationToken cancellationToken)
         {
-            return await _userRepository.GetUserInformationByRefreshToken(request.refreshToken);
+            return await _userService.GetUserInformationByRefreshToken(request.refreshToken);
         }
     }
 }

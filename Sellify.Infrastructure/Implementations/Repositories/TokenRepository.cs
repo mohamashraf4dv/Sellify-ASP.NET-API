@@ -24,7 +24,6 @@ namespace Sellify.Infrastructure.Implementations.Repositories
             return (state.State == EntityState.Added)? entity: null;
         }
 
-
         public async Task<Token> GetTokenByRefreshTokenAsync(string refreshToken, CancellationToken cancellationToken = default)
         {
             return await _context.Tokens.FirstOrDefaultAsync(t => t.RefreshToken == refreshToken, cancellationToken);
