@@ -3,7 +3,7 @@ using Sellify.Application.Contracts.Repositories;
 
 namespace Sellify.Application.Features.Authentication.Query.GetUserProfile
 {
-    public class GetUserProfileQueryHandler : IRequestHandler<GetUserProfileQuery, GenericResultDTO>
+    public class GetUserProfileQueryHandler : IRequestHandler<GetUserProfileQuery, GenericResultDTO<GetUserProfileQueryDTO>>
     {
         private readonly IUserService _userService;
 
@@ -11,7 +11,7 @@ namespace Sellify.Application.Features.Authentication.Query.GetUserProfile
         {
             this._userService = userService;
         }
-        public async Task<GenericResultDTO> Handle(GetUserProfileQuery request, CancellationToken cancellationToken)
+        public async Task<GenericResultDTO<GetUserProfileQueryDTO>> Handle(GetUserProfileQuery request, CancellationToken cancellationToken)
         {
             return await _userService.GetUserInformationByRefreshToken(request.refreshToken);
         }

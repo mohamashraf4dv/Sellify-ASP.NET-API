@@ -1,4 +1,6 @@
-﻿namespace Sellify.Infrastructure.IdentityUserModel
+﻿using Sellify.Domain.Enums;
+
+namespace Sellify.Infrastructure.IdentityUserModel
 {
     public class ApplicationUser:IdentityUser
     {
@@ -7,7 +9,7 @@
         public string LastName { get; set; }
         public string FullName => $"{FirstName} {LastName}";
         public int Age => DateTime.Now.Year - DateOfBirth.Year;
-
+        public SellerRoleRequestStatus? SellerRoleRequestStatus { get; set; } 
         public string? ImageURL { get; set; }
         //---- Navigation User
         public Seller? Seller { get; set; }

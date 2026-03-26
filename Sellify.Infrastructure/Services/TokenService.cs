@@ -124,12 +124,12 @@ namespace Sellify.Infrastructure.Services
             var errors = new Dictionary<string, HashSet<string>>();
             if(token is null)
             {
-                errors.Add(refreshToken, new HashSet<string>() { "Token not found"});
+                errors.Add("Refresh Token", new HashSet<string>() { "Token not found"});
                 return new GenericResultDTO(null, 404, errors);
             }
             else if (token.IsRevoked)
             {
-                    errors.Add(refreshToken, new HashSet<string>() { "Token already revoked" });
+                    errors.Add("Refresh Token", new HashSet<string>() { "Token already revoked" });
                     return new GenericResultDTO(null, 400, errors);
             }
             token.IsRevoked = true;

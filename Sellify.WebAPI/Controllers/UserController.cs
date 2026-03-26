@@ -18,7 +18,7 @@ namespace Sellify.WebAPI.Controllers
             this._mediator = mediator;
         }
         [HttpGet]
-        public async Task<ActionResult<GenericResultDTO>> GetUserProfile()
+        public async Task<ActionResult<GenericResultDTO<GetUserProfileQueryDTO>>> GetUserProfile()
         {
             var refreshToken = Request.Cookies?["bearer"];
            return await _mediator.Send(new GetUserProfileQuery(refreshToken));

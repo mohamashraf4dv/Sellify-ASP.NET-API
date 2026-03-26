@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Sellify.Infrastructure.ApplicationContext;
 
@@ -11,9 +12,11 @@ using Sellify.Infrastructure.ApplicationContext;
 namespace Sellify.Infrastructure.Migrations
 {
     [DbContext(typeof(SellifyMicrosoftSqlContext))]
-    partial class SellifyMicrosoftSqlContextModelSnapshot : ModelSnapshot
+    [Migration("20260325141906_init-seller-role-request")]
+    partial class initsellerrolerequest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,22 +50,6 @@ namespace Sellify.Infrastructure.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "0F9E7582-B7A3-4A6F-B1CC-79F2F350C2FF",
-                            ConcurrencyStamp = "0F9E7582-B7A3-4A6F-B1CC-79F2F350C2FF",
-                            Name = "Seller",
-                            NormalizedName = "SELLER"
-                        },
-                        new
-                        {
-                            Id = "C8CA233C-8C42-433D-A3ED-D5A8A2E7FC77",
-                            ConcurrencyStamp = "C8CA233C-8C42-433D-A3ED-D5A8A2E7FC77",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

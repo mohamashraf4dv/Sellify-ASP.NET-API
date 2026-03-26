@@ -1,5 +1,7 @@
 ﻿
 
+using Sellify.Domain.Enums;
+
 namespace Sellify.Infrastructure.ModelsConfigurations
 {
     public class ApplicationUserConfigurations : IEntityTypeConfiguration<ApplicationUser>
@@ -27,6 +29,9 @@ namespace Sellify.Infrastructure.ModelsConfigurations
             builder.Property(u => u.UserName)
                 .IsRequired()
                 .HasMaxLength(50);
+
+            builder.Property(u => u.SellerRoleRequestStatus)
+                .HasConversion<string>();
             #endregion
 
             #region Relationships
