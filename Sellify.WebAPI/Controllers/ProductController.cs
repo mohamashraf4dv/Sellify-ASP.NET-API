@@ -25,7 +25,7 @@ namespace Sellify.WebAPI.Controllers
             this.environment = environment;
         }
         [HttpGet]
-        public async Task<ActionResult<GenericResultDTO>> GetAll([FromQuery] int page = 1, [FromQuery] int number = 11)
+        public async Task<ActionResult<GenericResultDTO<GetAllProductsWithNextOptionDTO>>> GetAll([FromQuery] int page = 1, [FromQuery] int number = 11)
         {
             return await _mediator.Send(new GetAllProductsQuery(page, number));
         }

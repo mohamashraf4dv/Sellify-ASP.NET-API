@@ -27,14 +27,12 @@ namespace Sellify.Infrastructure.Implementations.Repositories
         {
             var skip = (pageNumber - 1) * take;
 
-            var sql = @"SELECT p.Id, Name as ProductName ,Price, Stock , pimg.Url as ProductImg, p.TotalSold,
-                        s.ImageURL, CONCAT(s.FirstName,' ',s.LastName) as SellerFullName , AverageReviews.AverageScore FROM Products p 
-                        INNER JOIN ProductImage pimg ON pimg.Id = ThumbnailId 
+            var sql = @"SELECT p.Id, Name as ProductName ,Price, Stock ,p.ThumbnailSource, p.TotalSold,
+                         CONCAT(s.FirstName,' ',s.LastName) as SellerFullName , AverageReviews.AverageScore FROM Products p 
                         INNER JOIN AspNetUsers s ON s.Id = p.SellerId
-                        INNER JOIN (SELECT AVG(Score) as AverageScore , ProductID FROM Reviews GROUP BY ProductId) AS AverageReviews 
+                        LEFT JOIN (SELECT AVG(Score) as AverageScore , ProductID FROM Reviews GROUP BY ProductId) AS AverageReviews 
                         on AverageReviews.ProductId = p.Id 
                         ORDER BY p.CreatedAt DESC OFFSET @skip ROWS FETCH NEXT @take ROWS ONLY;";
-
             using var connection = _dapperContext.Connection;
             IEnumerable<GetAllProductsDTO> products = await connection.QueryAsync<GetAllProductsDTO>(sql, new {skip,take});
             return products.ToList().AsReadOnly();
