@@ -21,9 +21,10 @@ namespace Sellify.Infrastructure.ModelsConfigurations
             builder.HasMany(p => p.ProductImages)
                   .WithOne(p => p.Product).HasForeignKey(p => p.ProductId);
 
-            builder.HasOne(p => p.Thumbnail)
-                .WithOne()
-                .HasForeignKey<Product>(p => p.ThumbnailId);
+            //builder.HasOne(p => p.Thumbnail)
+            //    .WithOne(pi=> pi.ProductUsesThumbnail)
+            //    .HasForeignKey<Product>(p => p.ThumbnailId)
+            //    .IsRequired(false);
 
             builder.HasOne(p => p.Seller)
                 .WithMany(p => p.Products).HasForeignKey(p => p.SellerId);

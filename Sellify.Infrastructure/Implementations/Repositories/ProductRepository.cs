@@ -39,5 +39,12 @@ namespace Sellify.Infrastructure.Implementations.Repositories
             IEnumerable<GetAllProductsDTO> products = await connection.QueryAsync<GetAllProductsDTO>(sql, new {skip,take});
             return products.ToList().AsReadOnly();
         }
+
+        public async Task<IReadOnlyList<Product>> GetProductsBySellerId(string sellerId)
+        {
+           var products = await _efContext.Products.Where(p=> p.SellerId==sellerId).AsNoTracking().ToListAsync();
+            return products;
+        }
+
     }
 }

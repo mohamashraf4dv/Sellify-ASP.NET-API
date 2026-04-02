@@ -6,6 +6,7 @@ namespace Sellify.Infrastructure.ApplicationContext
     public class SellifyMicrosoftSqlContext:IdentityDbContext<ApplicationUser>
     {
         public DbSet<Product> Products { get; set; }
+        public DbSet<ProductImage> ProductImages { get; set; }
         public DbSet<Seller> Sellers { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Token> Tokens { get; set; }

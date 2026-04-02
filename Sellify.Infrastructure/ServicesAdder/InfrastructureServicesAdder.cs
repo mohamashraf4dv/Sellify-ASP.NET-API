@@ -50,6 +50,7 @@ namespace Sellify.Infrastructure.ServicesAdder
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IFileService, FileService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             #endregion
             services.AddScoped<UserHelper>();

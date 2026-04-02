@@ -10,7 +10,6 @@ namespace Sellify.Infrastructure.Mapperly
     {
         [MapProperty(nameof(SellerProductDTO.Price), nameof(Product.Price))]
         [MapProperty(nameof(SellerProductDTO.Description), nameof(Product.Description))]
-        [MapProperty(nameof(SellerProductDTO.ImageURL), nameof(Product.Thumbnail.Url))]
         [MapProperty(nameof(SellerProductDTO.Name), nameof(Product.Name))]
         public static partial Product SellerProductDtoToProduct(SellerProductDTO productDTO);
 

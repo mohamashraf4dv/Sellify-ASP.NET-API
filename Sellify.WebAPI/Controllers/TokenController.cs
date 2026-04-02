@@ -21,7 +21,8 @@ namespace Sellify.WebAPI.Controllers
         [HttpGet("User")]
         public ActionResult GetApplicationUser() 
         {
-            return Ok();
+            var name = User.Identity.Name;
+            return Ok(name);
         }
 
         [HttpPost("refresh")]

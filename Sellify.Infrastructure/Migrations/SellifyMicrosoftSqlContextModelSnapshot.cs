@@ -211,8 +211,8 @@ namespace Sellify.Infrastructure.Migrations
                     b.Property<long>("Stock")
                         .HasColumnType("bigint");
 
-                    b.Property<Guid?>("ThumbnailId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("ThumbnailSource")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("TotalSold")
                         .HasColumnType("decimal(18,2)");
@@ -222,10 +222,6 @@ namespace Sellify.Infrastructure.Migrations
                     b.HasIndex("Name");
 
                     b.HasIndex("SellerId");
-
-                    b.HasIndex("ThumbnailId")
-                        .IsUnique()
-                        .HasFilter("[ThumbnailId] IS NOT NULL");
 
                     b.ToTable("Products");
                 });
@@ -237,8 +233,10 @@ namespace Sellify.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsThumbnail")
+                        .HasColumnType("bit");
 
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uniqueidentifier");
@@ -251,7 +249,7 @@ namespace Sellify.Infrastructure.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductImage");
+                    b.ToTable("ProductImages");
                 });
 
             modelBuilder.Entity("Sellify.Domain.Entities.Review", b =>
@@ -471,13 +469,7 @@ namespace Sellify.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Sellify.Domain.Entities.ProductImage", "Thumbnail")
-                        .WithOne()
-                        .HasForeignKey("Sellify.Domain.Entities.Product", "ThumbnailId");
-
                     b.Navigation("Seller");
-
-                    b.Navigation("Thumbnail");
                 });
 
             modelBuilder.Entity("Sellify.Domain.Entities.ProductImage", b =>

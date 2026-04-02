@@ -1,11 +1,9 @@
-﻿
-
-
-using FluentValidation;
+﻿using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
 using Sellify.Application.Behavior;
 using Sellify.Application.Global;
+using Sellify.Application.Mapper.AutoMapperProfiles;
 using System.Reflection;
 
 namespace Sellify.Application.ServiceAdder
@@ -20,6 +18,7 @@ namespace Sellify.Application.ServiceAdder
             });
             services.AddValidatorsFromAssemblyContaining(typeof(ApplicationServicesAdder));
             services.AddTransient(typeof(IPipelineBehavior<,>),typeof(ValidationBehaviorPipeline<,>));
+            services.AddAutoMapper(cnf=> cnf.AddProfile(new MappingProfile()));
             return services;
         }
     }

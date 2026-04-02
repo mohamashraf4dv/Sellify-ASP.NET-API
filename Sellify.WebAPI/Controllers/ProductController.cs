@@ -8,6 +8,7 @@ using Sellify.Application.Features.Products.Query.GetAllProducts;
 using Sellify.Application.Global;
 using Sellify.Domain.Entities;
 using Sellify.Infrastructure.Mapperly;
+using System.Security.Claims;
 
 namespace Sellify.WebAPI.Controllers
 {
@@ -16,38 +17,25 @@ namespace Sellify.WebAPI.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly ITokenService _jwtTokenService;
+        private readonly IWebHostEnvironment environment;
 
-        public ProductController(IMediator mediator,ITokenService jwtTokenService)
+        public ProductController(IMediator mediator,IWebHostEnvironment environment)
         {
             this._mediator = mediator;
-            this._jwtTokenService = jwtTokenService;
+            this.environment = environment;
         }
         [HttpGet]
         public async Task<ActionResult<GenericResultDTO>> GetAll([FromQuery] int page = 1, [FromQuery] int number = 11)
         {
             return await _mediator.Send(new GetAllProductsQuery(page, number));
         }
+
+        [Authorize(Roles = "Seller")]
         [HttpPost]
-        public async Task<ActionResult<GenericResultDTO>> CreateNew(SellerProductDTO productDto)
+        public async Task<ActionResult<GenericResultDTO>> CreateNew([FromForm] SellerProductDTO productDto)
         {
-            Product product = ProductMapper.SellerProductDtoToProduct(productDto);
-            return await _mediator.Send(new SellerAddProductCommand(product));
-        }
-
-        [Authorize]
-        [HttpGet("test")]
-        public async Task<ActionResult> Test()
-        {
-
-            return Ok("Your signedIn");
-        }
-        [HttpGet("Update")]
-        public async Task<ActionResult> Update([FromQuery] string refreshToken)
-        {
-
-            var token = await _jwtTokenService.UpdateExistingAccessToken(refreshToken);
-            return Ok(token);
+            var userId = User.FindFirstValue("sid");
+            return await _mediator.Send(new SellerAddProductCommand(productDto, userId));
         }
 
     }

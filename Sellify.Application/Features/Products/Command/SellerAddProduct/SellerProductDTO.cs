@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.AspNetCore.Http;
+
 namespace Sellify.Application.Features.Products.Command.SellerAddProduct
 {
     public record SellerProductDTO
@@ -6,8 +8,7 @@ namespace Sellify.Application.Features.Products.Command.SellerAddProduct
         string Name,
         string Description,
         decimal Price,
-        string ImageURL,
-        string SellerId
+        IFormFile image
         );
 
 }

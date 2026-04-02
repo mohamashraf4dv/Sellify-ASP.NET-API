@@ -7,7 +7,6 @@ namespace Sellify.Infrastructure.ModelsConfigurations
         {
             builder.HasKey(pi => pi.Id);
             builder.Property(pi => pi.Url).IsRequired();
-            builder.Property(pi => pi.Description).IsRequired();
         }
     }
 }

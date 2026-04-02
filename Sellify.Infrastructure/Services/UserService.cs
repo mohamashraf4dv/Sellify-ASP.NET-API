@@ -62,22 +62,49 @@ namespace Sellify.Infrastructure.Services
             if (applicationUser is null)
                 return new GenericResultDTO(null, 404);
 
+            string errorMessage = null;
             switch (sellerRoleRequestStatus)
             {
                 case null:
-                    applicationUser.SellerRoleRequestStatus = SellerRoleRequestStatus.Pending;
+                    var result = await _userManager.AddToRoleAsync(applicationUser, "Seller");
+                    if (result.Succeeded)
+                    {
+                        applicationUser.SellerRoleRequestStatus = SellerRoleRequestStatus.Approved;
+                        applicationUser.Seller= new Seller { Id = applicationUser.Id, IsActive=true };
+                    }
+                    else
+                    {
+                        applicationUser.SellerRoleRequestStatus = SellerRoleRequestStatus.Rejected;
+                        errorMessage = result.Errors.FirstOrDefault()?.Description;
+                        goto default;
+                    }
                     break;
+
+                    /* ---- might be added in the future but in another action as admin won't use the same action -> should use the user id --------
+                     --- this one works on refreshToken that is sent in http only cookie ---
+
                 case SellerRoleRequestStatus.Approved:
-                    applicationUser.SellerRoleRequestStatus = SellerRoleRequestStatus.Approved;
+
+                    //var result = await _userManager.AddToRoleAsync(applicationUser, "Seller");
+                    if(result.Succeeded)
+                        applicationUser.SellerRoleRequestStatus = SellerRoleRequestStatus.Approved;
+
+                    else {
+                        applicationUser.SellerRoleRequestStatus = SellerRoleRequestStatus.Rejected;
+                          }
+
                     break;
+
                 case SellerRoleRequestStatus.Rejected:
                     applicationUser.SellerRoleRequestStatus = SellerRoleRequestStatus.Rejected;
                     break;
+                    */
                 default:
                     #region Error Initializing
                     var errors = new Dictionary<string, HashSet<string>>();
                     var errorsHashset = new HashSet<string>();
                     errorsHashset.Add("Unexpected Error Happened");
+                    errorsHashset.Add(errorMessage);
                     errors.Add("Error", errorsHashset); 
                     #endregion
                     _logger.LogError("Unexpected Error happened when request status is {sellerRoleRequestStatus}", sellerRoleRequestStatus);
@@ -88,7 +115,9 @@ namespace Sellify.Infrastructure.Services
                 return new GenericResultDTO(null, 200);
 
             return new GenericResultDTO(null, 500);
-
         }
+
+
+
     }
 }

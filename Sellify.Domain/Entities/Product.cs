@@ -26,10 +26,10 @@ namespace Sellify.Domain.Entities
 
         //Each Product Have Many Product Images 
         public ICollection<ProductImage> ProductImages { get; set; } = new HashSet<ProductImage>();
-
+        public string? ThumbnailSource { get; set; }
         //Each Product have one Thumbnail
-        public ProductImage? Thumbnail { get; set; }
-        public Guid? ThumbnailId { get; set; }
+        //public ProductImage? Thumbnail { get; set; }
+        //public Guid? ThumbnailId { get; set; }
 
         //Each Product have one Seller
         public Seller Seller { get; set; }

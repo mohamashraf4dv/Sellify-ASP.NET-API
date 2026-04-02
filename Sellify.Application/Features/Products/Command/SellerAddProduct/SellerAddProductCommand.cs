@@ -1,5 +1,7 @@
-﻿namespace Sellify.Application.Features.Products.Command.SellerAddProduct
+﻿using Microsoft.AspNetCore.Http;
+
+namespace Sellify.Application.Features.Products.Command.SellerAddProduct
 {
-    public record SellerAddProductCommand(Product product) : IRequest<GenericResultDTO>;
+    public record SellerAddProductCommand(SellerProductDTO ProductDTO,string SellerId) : IRequest<GenericResultDTO>;
 
 }
