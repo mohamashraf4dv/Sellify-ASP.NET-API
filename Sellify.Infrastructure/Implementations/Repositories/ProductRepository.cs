@@ -1,6 +1,8 @@
 ﻿
 
+using Sellify.Application.Features.Products.Command.SellerUpdateProducts;
 using Sellify.Application.Features.Products.Query.GetAllProducts;
+using Sellify.Application.Features.Seller.Query.GetBySellerIdProducts;
 
 namespace Sellify.Infrastructure.Implementations.Repositories
 {
@@ -28,7 +30,7 @@ namespace Sellify.Infrastructure.Implementations.Repositories
             var skip = (pageNumber - 1) * take;
 
             var sql = @"SELECT p.Id, Name as ProductName ,Price, Stock ,p.ThumbnailSource, p.TotalSold,
-                         CONCAT(s.FirstName,' ',s.LastName) as SellerFullName , AverageReviews.AverageScore FROM Products p 
+                         CONCAT(s.FirstName,' ',s.LastName) as SellerFullName , s.ImageURL as SellerImage , CreatedAt , AverageReviews.AverageScore FROM Products p 
                         INNER JOIN AspNetUsers s ON s.Id = p.SellerId
                         LEFT JOIN (SELECT AVG(Score) as AverageScore , ProductID FROM Reviews GROUP BY ProductId) AS AverageReviews 
                         on AverageReviews.ProductId = p.Id 
@@ -38,11 +40,55 @@ namespace Sellify.Infrastructure.Implementations.Repositories
             return products.ToList().AsReadOnly();
         }
 
-        public async Task<IReadOnlyList<Product>> GetProductsBySellerId(string sellerId)
+        #region GetProductsBySellerId(sid) that returns product list 
+        //public async Task<IReadOnlyList<Product>> GetProductsBySellerId(string sellerId)
+        //{
+        //   var products = 
+        //        await _efContext.Products
+        //                        .AsNoTracking()
+        //                        .AsSplitQuery()
+        //                        .Include(p=> p.ProductImages)
+        //                        .Where(p=> p.SellerId==sellerId)
+        //                        .ToListAsync();
+        //    return products;
+        //}
+
+        #endregion
+
+        //this violates the repository pattern but it is more efficient than the previous one because it only selects the necessary fields and not the whole product entity with all its navigation properties
+        public async Task<IReadOnlyList<GetBySellerIdProductsQueryDTO>> GetProductsBySellerId(string sellerId)
         {
-           var products = await _efContext.Products.Where(p=> p.SellerId==sellerId).AsNoTracking().ToListAsync();
+            var products =
+                 await _efContext.Products
+                                 .AsNoTracking()
+                                 .AsSplitQuery()
+                                 .Where(p => p.SellerId == sellerId)
+                                 .Select(p => new GetBySellerIdProductsQueryDTO
+                                 (
+                                     p.Id,
+                                     p.Name,
+                                     p.Price,
+                                     p.Stock,
+                                     p.ProductImages.Select(pi => pi.Url).ToList(),
+                                     p.ThumbnailSource
+                                 )).ToListAsync();
+                                 
             return products;
         }
 
+        public Task UpdateRangeSpecificallyStockPriceNameAsync(IReadOnlyList<Product> products)
+        {
+            _efContext.AttachRange(products);
+            foreach (var product in products)
+            {
+                _efContext.Entry(product).Property(p => p.Stock).IsModified = true;
+                _efContext.Entry(product).Property(p => p.Price).IsModified = true;
+                _efContext.Entry(product).Property(p => p.Name).IsModified = true;
+                _efContext.Entry(product).Property(p => p.LastUpdatedAt).CurrentValue = DateTime.UtcNow;
+                _efContext.Entry(product).Property(p => p.LastUpdatedAt).IsModified = true;
+
+            }
+            return Task.CompletedTask;
+        }
     }
 }

@@ -2,10 +2,11 @@
 {
     public record GetBySellerIdProductsQueryDTO( 
      Guid Id ,
-     string ProductName ,
+     string Name ,
      decimal Price ,
-     decimal Stock ,
-     string ImageURL 
+     long Stock ,
+     ICollection<string> ProductImages,
+     string ThumbnailSource
      );
 
 }

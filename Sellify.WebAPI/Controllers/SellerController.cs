@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Sellify.Application.Features.Products.Command.SellerUpdateProducts;
 using Sellify.Application.Features.Seller.Command.RequestRole;
 using Sellify.Application.Features.Seller.Query.GetBySellerIdProducts;
 using Sellify.Application.Global;
@@ -24,15 +25,22 @@ namespace Sellify.WebAPI.Controllers
         public async Task<ActionResult<GenericResultDTO>> SellerApplying()
         {
             var refreshToken = Request.Cookies?["bearer"];
-            var result = await _mediator.Send(new RequestRoleCommand(refreshToken));
-            return result;
+            return await _mediator.Send(new RequestRoleCommand(refreshToken));
             //-- get profile if : NULL Else => BAD REQUEST
         }
-        [HttpGet("{id}/Products")]
-        public async Task<ActionResult<GenericResultDTO<IReadOnlyList<GetBySellerIdProductsQueryDTO>>>> GetSellerProductsById(string id)
+        [HttpGet("Products")]
+        [Authorize]
+        public async Task<ActionResult<GenericResultDTO<IReadOnlyList<GetBySellerIdProductsQueryDTO>>>> GetSellerProductsById([FromQuery]string? sellerId)
         {
-            var result = await _mediator.Send(new GetBySellerIdProductsQuery(id));
-            return result;
+            sellerId ??= User.Claims.FirstOrDefault(c => c.Type == "sid")?.Value;
+            return await _mediator.Send(new GetBySellerIdProductsQuery(sellerId));
+             
+        }
+        [HttpPut("Products")]
+        [Authorize(Roles ="Seller")]
+        public async Task<ActionResult<GenericResultDTO>> UpdateChangedProducts(IReadOnlyList<SellerUpdateProductsDTO> products)
+        {
+            return await _mediator.Send(new SellerUpdateProductsCommand(products));
         }
         #region this might be added in the future
         /*

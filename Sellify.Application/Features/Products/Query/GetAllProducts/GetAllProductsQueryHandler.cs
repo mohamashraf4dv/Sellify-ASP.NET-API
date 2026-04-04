@@ -27,8 +27,9 @@ namespace Sellify.Application.Features.Products.Query.GetAllProducts
                 errors["Products"].Add("There are no products");
                 return new GenericResultDTO<GetAllProductsWithNextOptionDTO>(null, 404, errors);
             }
-            bool isNext = products.Count > request.Take - 1;
-            return new GenericResultDTO<GetAllProductsWithNextOptionDTO>(new GetAllProductsWithNextOptionDTO(products , isNext ), 200);
+            var returnedProducts = products.Take(request.Take - 1).ToList();
+            bool isNext = products.Count > returnedProducts.Count;
+            return new GenericResultDTO<GetAllProductsWithNextOptionDTO>(new GetAllProductsWithNextOptionDTO(returnedProducts, isNext ), 200);
         }
     }
 }

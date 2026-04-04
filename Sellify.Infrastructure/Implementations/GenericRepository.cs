@@ -23,6 +23,12 @@ namespace Sellify.Infrastructure.Implementations
             _context.Set<TEntity>().Update(entity);
             return entity;
         }
+        public bool UpdateRange(IReadOnlyList<TEntity> entitities)
+        {
+            var changedEntity = entitities.Select(entity => { entity.LastUpdatedAt = DateTime.UtcNow; return entity; });
+            _context.Set<TEntity>().UpdateRange(changedEntity);
+            return true;
+        }
 
         public TEntity Delete(TEntity entity) 
         {

@@ -15,7 +15,7 @@ namespace Sellify.Application.Features.Seller.Query.GetBySellerIdProducts
         }
         public async Task<GenericResultDTO<IReadOnlyList<GetBySellerIdProductsQueryDTO>>> Handle(GetBySellerIdProductsQuery request, CancellationToken cancellationToken)
         {
-           var products = await _productRepository.GetProductsBySellerId(request.sellerId);
+           var products = await _productRepository.GetProductsBySellerId(request.SellerId);
             if (products is null || !products.Any())
                 return new GenericResultDTO<IReadOnlyList<GetBySellerIdProductsQueryDTO>>(null, 404);
             var productsDTO = _mapper.Map<IReadOnlyList<GetBySellerIdProductsQueryDTO>>(products);
