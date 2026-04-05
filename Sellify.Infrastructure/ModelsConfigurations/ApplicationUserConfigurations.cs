@@ -43,6 +43,9 @@ namespace Sellify.Infrastructure.ModelsConfigurations
                 .WithOne().HasForeignKey(r => r.ApplicationUserId).OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(au => au.Token).WithOne().HasForeignKey<Token>(t => t.ApplicationUserId);
+
+            builder.HasMany(u => u.Orders)
+                .WithOne().HasForeignKey(o => o.BuyerId).OnDelete(DeleteBehavior.Restrict);
             #endregion
         }
     }

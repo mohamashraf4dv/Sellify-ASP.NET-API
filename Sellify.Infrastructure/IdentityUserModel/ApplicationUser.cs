@@ -19,5 +19,8 @@ namespace Sellify.Infrastructure.IdentityUserModel
 
         // Each Application User have Exactly one Token that gets updates eventually
         public Token Token { get; set; }
+
+        // Each Application User can have Many Orders as a Buyer
+        public ICollection<Order> Orders { get; set; } = new HashSet<Order>();
     }
 }
