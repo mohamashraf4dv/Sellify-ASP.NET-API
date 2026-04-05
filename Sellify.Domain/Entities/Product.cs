@@ -38,5 +38,8 @@ namespace Sellify.Domain.Entities
         //Each Product have Many Reviews
         public ICollection<Review> Reviews { get; set; } = new HashSet<Review>();
 
+        //Each Product have Many OrderItems
+        public ICollection<OrderItem> OrderItems { get; set; } = new HashSet<OrderItem>();
+
     }
 }
