@@ -41,5 +41,18 @@ namespace Sellify.Domain.Entities
         //Each Product have Many OrderItems
         public ICollection<OrderItem> OrderItems { get; set; } = new HashSet<OrderItem>();
 
+        public Product BeginSellingTransaction(long quantity) 
+        {
+            if (quantity <= 0)
+                throw new ArgumentException("Quantity must be greater than zero.", nameof(quantity));
+
+            if (quantity> Stock)
+                throw new ArgumentOutOfRangeException(nameof(quantity));
+
+            Stock = Stock - quantity;
+            TotalSold += quantity;
+
+            return this;
+        }
     }
 }

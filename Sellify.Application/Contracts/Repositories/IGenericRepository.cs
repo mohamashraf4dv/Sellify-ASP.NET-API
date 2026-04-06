@@ -12,7 +12,7 @@ namespace Sellify.Application.Contracts.Repositories
         public TEntity Update(TEntity entity);
         public TEntity Delete(TEntity entity);
 
-        public Task<IQueryable<TEntity>> GetAllQueryable();
-        public Task<IQueryable<TEntity>> GetAllQueryable(Expression<Func<TEntity, bool>> whereExpression );
+        public IQueryable<TEntity> GetAllQueryable();
+        public IQueryable<TEntity> GetAllQueryable(Expression<Func<TEntity, bool>> whereExpression );
     }
 }

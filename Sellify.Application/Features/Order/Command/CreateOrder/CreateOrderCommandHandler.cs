@@ -13,9 +13,17 @@ namespace Sellify.Application.Features.Order.Command.CreateOrder
             this._productRepository = productRepository;
             this._unitOfWork = unitOfWork;
         }
-        public Task<GenericResultDTO> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
+        public async Task<GenericResultDTO> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
+            var productsFromDB = _productRepository.GetAllQueryable(p => request.ProductsIds.Contains(p.Id)).ToList();
+            foreach (var product in productsFromDB)
+            {
+                product.BeginSellingTransaction(request.OrderDTO[product.Id].Quantity);
+                product.RowVersion = Guid.NewGuid();
+            }
 
+            await _unitOfWork.SaveChangesAsync();
+            return new GenericResultDTO(null, 200);
         }
     }
 }

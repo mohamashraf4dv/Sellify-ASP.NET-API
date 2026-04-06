@@ -2,8 +2,8 @@
 {
     public record CreateOrderCommand
         (
-            IReadOnlyList<CreateOrderDTO> OrderDTO,
-            IReadOnlyList<string> ProductsIds
+            IReadOnlyDictionary<Guid,CreateOrderDTO> OrderDTO,
+            List<Guid> ProductsIds
         
         ) : IRequest<GenericResultDTO>;
 
