@@ -190,7 +190,7 @@ namespace Sellify.Infrastructure.Migrations
 
                     b.HasIndex("CreatedAt");
 
-                    b.ToTable("Order");
+                    b.ToTable("Order", (string)null);
                 });
 
             modelBuilder.Entity("Sellify.Domain.Entities.OrderItem", b =>
@@ -217,7 +217,7 @@ namespace Sellify.Infrastructure.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderItem");
+                    b.ToTable("OrderItem", (string)null);
                 });
 
             modelBuilder.Entity("Sellify.Domain.Entities.Product", b =>
@@ -272,7 +272,7 @@ namespace Sellify.Infrastructure.Migrations
 
                     b.HasIndex("SellerId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("Sellify.Domain.Entities.ProductImage", b =>
@@ -298,7 +298,7 @@ namespace Sellify.Infrastructure.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductImages");
+                    b.ToTable("ProductImages", (string)null);
                 });
 
             modelBuilder.Entity("Sellify.Domain.Entities.Review", b =>
@@ -326,7 +326,7 @@ namespace Sellify.Infrastructure.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Reviews");
+                    b.ToTable("Reviews", (string)null);
                 });
 
             modelBuilder.Entity("Sellify.Domain.Entities.Seller", b =>
@@ -342,7 +342,7 @@ namespace Sellify.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Sellers");
+                    b.ToTable("Sellers", (string)null);
                 });
 
             modelBuilder.Entity("Sellify.Domain.Entities.Token", b =>
@@ -370,7 +370,7 @@ namespace Sellify.Infrastructure.Migrations
 
                     b.HasKey("ApplicationUserId");
 
-                    b.ToTable("Tokens");
+                    b.ToTable("Tokens", (string)null);
                 });
 
             modelBuilder.Entity("Sellify.Infrastructure.IdentityUserModel.ApplicationUser", b =>

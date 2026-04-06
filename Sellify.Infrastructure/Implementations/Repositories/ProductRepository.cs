@@ -29,11 +29,15 @@ namespace Sellify.Infrastructure.Implementations.Repositories
         {
             var skip = (pageNumber - 1) * take;
 
-            var sql = @"SELECT p.Id, Name as ProductName ,Price, Stock ,p.ThumbnailSource, p.TotalSold,
-                         CONCAT(s.FirstName,' ',s.LastName) as SellerFullName , s.ImageURL as SellerImage , CreatedAt , AverageReviews.AverageScore FROM Products p 
+            var sql = @"SELECT 
+                         p.Id, Name as ProductName ,Price, Stock ,p.ThumbnailSource, p.TotalSold,
+                         CONCAT(s.FirstName,' ',s.LastName) as SellerFullName , s.ImageURL as SellerImage ,
+                         CreatedAt , AverageReviews.AverageScore,  p.RowVersion 
+                        FROM Products p 
                         INNER JOIN AspNetUsers s ON s.Id = p.SellerId
-                        LEFT JOIN (SELECT AVG(Score) as AverageScore , ProductID FROM Reviews GROUP BY ProductId) AS AverageReviews 
-                        on AverageReviews.ProductId = p.Id 
+                        LEFT JOIN (SELECT AVG(Score) as AverageScore , ProductID 
+                        FROM Reviews GROUP BY ProductId) AS AverageReviews 
+                        ON AverageReviews.ProductId = p.Id 
                         ORDER BY p.CreatedAt DESC OFFSET @skip ROWS FETCH NEXT @take ROWS ONLY;";
             using var connection = _dapperContext.Connection;
             IEnumerable<GetAllProductsDTO> products = await connection.QueryAsync<GetAllProductsDTO>(sql, new {skip,take});
@@ -86,6 +90,8 @@ namespace Sellify.Infrastructure.Implementations.Repositories
                 _efContext.Entry(product).Property(p => p.Name).IsModified = true;
                 _efContext.Entry(product).Property(p => p.LastUpdatedAt).CurrentValue = DateTime.UtcNow;
                 _efContext.Entry(product).Property(p => p.LastUpdatedAt).IsModified = true;
+                _efContext.Entry(product).Property(p => p.RowVersion).CurrentValue = Guid.NewGuid();
+                _efContext.Entry(product).Property(p => p.RowVersion).IsModified = true;
 
             }
             return Task.CompletedTask;

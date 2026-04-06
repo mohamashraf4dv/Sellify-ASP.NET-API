@@ -14,7 +14,7 @@ namespace Sellify.Infrastructure.ModelsConfigurations
             builder.Property(p => p.Price).IsRequired();
             builder.Property(p => p.Name).IsRequired();
             builder.Property(p => p.Stock).IsRequired();
-            builder.Property(p => p.RowVersion).IsRowVersion();
+            builder.Property(p => p.RowVersion).IsConcurrencyToken();
             #endregion
 
             #region Relationships

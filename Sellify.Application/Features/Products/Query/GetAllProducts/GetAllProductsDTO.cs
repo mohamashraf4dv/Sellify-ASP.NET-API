@@ -12,5 +12,6 @@
         public DateTime CreatedAt { get; set; }
         public decimal TotalSold { get; set; }
         public byte AverageScore { get; set; }
+        public Guid RowVersion { get; set; }
     }
 }
