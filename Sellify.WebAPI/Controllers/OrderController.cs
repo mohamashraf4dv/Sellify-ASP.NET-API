@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Sellify.Application.Features.Order.Command.CreateOrder;
+using Sellify.Application.Global;
 
 namespace Sellify.WebAPI.Controllers
 {
@@ -8,10 +11,18 @@ namespace Sellify.WebAPI.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
-        [HttpPost]
-        public async Task<ActionResult> CreateOrder(IReadOnlyList<CreateOrderDTO> orderDTOs)
+        private readonly IMediator _mediator;
+
+        public OrderController(IMediator mediator) 
         {
-            return Ok(orderDTOs);
+            this._mediator = mediator;
+        }
+        [HttpPost]
+        [Authorize]
+        public async Task<ActionResult<GenericResultDTO>> CreateOrder(CreateOrderRequest createOrderRequest)
+        {
+            return await _mediator.Send(new CreateOrderCommand(createOrderRequest.Order,createOrderRequest.ProductsIds));
+            //return Ok(createOrderRequest);
         }
     }
 }

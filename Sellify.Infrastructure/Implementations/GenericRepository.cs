@@ -1,5 +1,7 @@
 ﻿
 
+using System.Linq.Expressions;
+
 namespace Sellify.Infrastructure.Implementations
 {
     public class GenericRepository<TEntity> :IGenericRepository<TEntity> where TEntity : class, ISoftDeletable, IEntityUpdatable
@@ -38,5 +40,15 @@ namespace Sellify.Infrastructure.Implementations
             return entity;
         }
 
+        public async Task<IQueryable<TEntity>> GetAllQueryable()
+        {
+           return _context.Set<TEntity>().AsQueryable();
+        }
+
+        public async Task<IQueryable<TEntity>> GetAllQueryable(Expression<Func<TEntity,bool>> whereExpression)
+        {
+            return _context.Set<TEntity>().Where(whereExpression).AsQueryable();
+
+        }
     }
 }

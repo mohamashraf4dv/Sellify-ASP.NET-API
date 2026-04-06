@@ -1,6 +1,4 @@
-﻿
-
-using Sellify.Application.Features.Products.Command.SellerUpdateProducts;
+﻿using Sellify.Application.Features.Products.Command.SellerUpdateProducts;
 using Sellify.Application.Features.Products.Query.GetAllProducts;
 using Sellify.Application.Features.Seller.Query.GetBySellerIdProducts;
 
@@ -85,10 +83,10 @@ namespace Sellify.Infrastructure.Implementations.Repositories
             _efContext.AttachRange(products);
             foreach (var product in products)
             {
+                product.LastUpdatedAt = DateTime.UtcNow;
                 _efContext.Entry(product).Property(p => p.Stock).IsModified = true;
                 _efContext.Entry(product).Property(p => p.Price).IsModified = true;
                 _efContext.Entry(product).Property(p => p.Name).IsModified = true;
-                _efContext.Entry(product).Property(p => p.LastUpdatedAt).CurrentValue = DateTime.UtcNow;
                 _efContext.Entry(product).Property(p => p.LastUpdatedAt).IsModified = true;
                 _efContext.Entry(product).Property(p => p.RowVersion).CurrentValue = Guid.NewGuid();
                 _efContext.Entry(product).Property(p => p.RowVersion).IsModified = true;
@@ -96,5 +94,6 @@ namespace Sellify.Infrastructure.Implementations.Repositories
             }
             return Task.CompletedTask;
         }
+        
     }
 }
