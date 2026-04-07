@@ -2,8 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Sellify.Application.Features.Order.Command.CreateOrder;
+using Sellify.Application.Features.Orders.Command.CreateOrder;
 using Sellify.Application.Global;
+using System.Security.Claims;
 
 namespace Sellify.WebAPI.Controllers
 {
@@ -21,8 +22,8 @@ namespace Sellify.WebAPI.Controllers
         [Authorize]
         public async Task<ActionResult<GenericResultDTO>> CreateOrder(CreateOrderRequest createOrderRequest)
         {
-            return await _mediator.Send(new CreateOrderCommand(createOrderRequest.Order,createOrderRequest.ProductsIds));
-            //return Ok(createOrderRequest);
+            var userId = User.FindFirstValue("sid");
+            return await _mediator.Send(new CreateOrderCommand(createOrderRequest.Order,createOrderRequest.ProductsIds,userId));
         }
     }
 }

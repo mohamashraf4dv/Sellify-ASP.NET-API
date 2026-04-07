@@ -1,9 +1,10 @@
-﻿namespace Sellify.Application.Features.Order.Command.CreateOrder
+﻿namespace Sellify.Application.Features.Orders.Command.CreateOrder
 {
     public record CreateOrderCommand
         (
             IReadOnlyDictionary<Guid,CreateOrderDTO> OrderDTO,
-            List<Guid> ProductsIds
+            List<Guid> ProductsIds,
+            string BuyerId
         
         ) : IRequest<GenericResultDTO>;
 

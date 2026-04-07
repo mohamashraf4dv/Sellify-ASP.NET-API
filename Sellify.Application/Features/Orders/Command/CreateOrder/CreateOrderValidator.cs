@@ -1,4 +1,4 @@
-﻿namespace Sellify.Application.Features.Order.Command.CreateOrder
+﻿namespace Sellify.Application.Features.Orders.Command.CreateOrder
 {
     public class CreateOrderValidator: AbstractValidator<CreateOrderCommand>
     {
