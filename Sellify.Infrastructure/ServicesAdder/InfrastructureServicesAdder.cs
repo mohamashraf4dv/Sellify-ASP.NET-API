@@ -43,8 +43,6 @@ namespace Sellify.Infrastructure.ServicesAdder
                 };
             });
 
-            Stripe.StripeConfiguration.ApiKey = configuration.GetSection("Stripe").Get<StripeOptions>().SecretKey;
-
             #region Scoped Repositories
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ITokenRepository, TokenRepository>();
@@ -60,6 +58,10 @@ namespace Sellify.Infrastructure.ServicesAdder
             #endregion
 
             services.Configure<URLS>(configuration.GetSection("URLS"));
+            Stripe.StripeConfiguration.ApiKey = configuration.GetSection("Stripe").Get<StripeOptions>().SecretKey;
+
+            
+
 
             services.AddScoped<UserHelper>();
             return services;
