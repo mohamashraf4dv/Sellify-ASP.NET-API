@@ -2,6 +2,7 @@ using FluentValidation;
 using Scalar.AspNetCore;
 using Sellify.Application.Features.Authentication.Commands.InternalUserLogin;
 using Sellify.Application.ServiceAdder;
+using Sellify.Infrastructure.AppSettingOptions;
 using Sellify.Infrastructure.ServicesAdder;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,7 +17,7 @@ builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
     {
-        policy.WithOrigins(builder.Configuration["AllowedDomainPolicy"])
+        policy.WithOrigins(builder.Configuration.GetSection("URLS").Get<URLS>().ClientDomain)
               .AllowAnyMethod()
               .AllowAnyHeader()
               .AllowCredentials();

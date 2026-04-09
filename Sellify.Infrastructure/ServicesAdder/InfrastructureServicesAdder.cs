@@ -1,5 +1,6 @@
 ﻿
 
+using Sellify.Infrastructure.AppSettingOptions;
 using Sellify.Infrastructure.Implementations;
 
 namespace Sellify.Infrastructure.ServicesAdder
@@ -41,6 +42,9 @@ namespace Sellify.Infrastructure.ServicesAdder
                     ClockSkew= TimeSpan.Zero
                 };
             });
+
+            Stripe.StripeConfiguration.ApiKey = configuration.GetSection("Stripe").Get<StripeOptions>().SecretKey;
+
             #region Scoped Repositories
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ITokenRepository, TokenRepository>();
@@ -51,8 +55,12 @@ namespace Sellify.Infrastructure.ServicesAdder
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IFileService, FileService>();
+            services.AddScoped<IPaymentService, PaymentService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             #endregion
+
+            services.Configure<URLS>(configuration.GetSection("URLS"));
+
             services.AddScoped<UserHelper>();
             return services;
         }
