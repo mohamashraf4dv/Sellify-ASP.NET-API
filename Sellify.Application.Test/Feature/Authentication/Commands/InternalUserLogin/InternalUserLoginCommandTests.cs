@@ -2,7 +2,7 @@
 using Moq;
 using Sellify.Application.Contracts.Services;
 using Sellify.Application.Features.Authentication.Commands.InternalUserLogin;
-using Sellify.Application.Test.Feature.Authentication.Mocks;
+using Sellify.Application.Test.Feature.Mocks;
 
 namespace Sellify.Application.Test.Feature.Authentication.Commands.InternalUserLogin
 {

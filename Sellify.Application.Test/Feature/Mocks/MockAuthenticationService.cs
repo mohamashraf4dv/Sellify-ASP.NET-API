@@ -2,12 +2,14 @@
 using Moq;
 using Sellify.Application.Contracts.Services;
 using Sellify.Application.Features.Authentication.Commands.InternalUserLogin;
+using Sellify.Application.Features.Authentication.Commands.UserRegisteration;
 using Sellify.Application.Features.Token;
 using Sellify.Application.Global;
 using Sellify.Infrastructure.IdentityUserModel;
+using Sellify.Infrastructure.Mapperly;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace Sellify.Application.Test.Feature.Authentication.Mocks
+namespace Sellify.Application.Test.Feature.Mocks
 {
     public class MockAuthenticationService
     {
@@ -21,6 +23,7 @@ namespace Sellify.Application.Test.Feature.Authentication.Mocks
             };
 
             var mock = new Mock<IAuthenticationService>();
+
             mock.Setup(a => a.InternalLogin(It.IsAny<InternalUserLoginDTO>())).ReturnsAsync((InternalUserLoginDTO internalUserLogin) =>
             {
                 var userFound = applicationUsers.FirstOrDefault(a => (a.Email == internalUserLogin.LoginIdentifier || a.UserName == internalUserLogin.LoginIdentifier) && a.PasswordHash == internalUserLogin.Password);
@@ -29,6 +32,19 @@ namespace Sellify.Application.Test.Feature.Authentication.Mocks
 
                 return new GenericResultDTO<TokensDTO>(new TokensDTO("refreshToken","accessToken"),201);
 
+            });
+
+            mock.Setup(a => a.Register(It.IsAny<UserRegisterationDTO>())).ReturnsAsync((UserRegisterationDTO userRegisteration) =>
+            {
+                ApplicationUser applicationUser = ApplicationUserMapper.UserRegisterationDtoToApplicationUser(userRegisteration);
+                if(applicationUsers.Any(a=> a.Email == applicationUser.Email || a.UserName == applicationUser.UserName))
+                    return new GenericResultDTO<TokensDTO>(null, 400);
+
+                applicationUsers.Add(applicationUser);
+                if(applicationUsers.Count==3)
+                    return new GenericResultDTO<TokensDTO>(null, 400);
+
+                return new GenericResultDTO<TokensDTO>(new TokensDTO("refreshToken","accessToken"),201);
             });
 
             return mock;
