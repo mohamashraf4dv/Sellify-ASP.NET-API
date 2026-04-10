@@ -13,7 +13,7 @@ namespace Sellify.Application.Features.Authentication.Query.GetUserProfile
         }
         public async Task<GenericResultDTO<GetUserProfileQueryDTO>> Handle(GetUserProfileQuery request, CancellationToken cancellationToken)
         {
-            return await _userService.GetUserInformationByRefreshToken(request.refreshToken);
+            return await _userService.GetUserInformationById(request.userId);
         }
     }
 }

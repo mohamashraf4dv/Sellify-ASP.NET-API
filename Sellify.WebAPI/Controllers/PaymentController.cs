@@ -37,7 +37,6 @@ namespace Sellify.WebAPI.Controllers
             var list =lineItemService.List(sessionId);
            var sessionGot= await session.GetAsync(sessionId);
             return Ok(list);
-            //return Ok(sessionGot);
         }
 
 

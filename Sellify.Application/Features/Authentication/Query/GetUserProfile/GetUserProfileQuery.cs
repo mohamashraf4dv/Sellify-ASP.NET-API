@@ -1,5 +1,4 @@
 ﻿namespace Sellify.Application.Features.Authentication.Query.GetUserProfile
 {
-    public record GetUserProfileQuery(string refreshToken) : IRequest<GenericResultDTO<GetUserProfileQueryDTO>>;
-
+    public record GetUserProfileQuery(string userId) : IRequest<GenericResultDTO<GetUserProfileQueryDTO>>;
 }

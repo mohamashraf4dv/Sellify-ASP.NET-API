@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Sellify.Application.Features.Authentication.Commands.InternalUserLogin;
 using Sellify.Application.Features.Authentication.Commands.UserRegisteration;
+using Sellify.Application.Features.Token;
 using Sellify.Application.Global;
 using Sellify.Infrastructure.IdentityUserModel;
 using Sellify.Infrastructure.Mapperly;
@@ -21,7 +22,7 @@ namespace Sellify.WebAPI.Controllers
             _mediator = mediator;
         }
         [HttpPost("register")]
-        public async Task<ActionResult> Register([FromBody] UserRegisterationDTO userRegisterationDTO)
+        public async Task<ActionResult<GenericResultDTO<TokensDTO>>> Register([FromBody] UserRegisterationDTO userRegisterationDTO)
         {
             var result = await _mediator.Send(new UserRegisterationCommand() { userRegisteration = userRegisterationDTO });
             return StatusCode(result.statusCode,result);
@@ -30,6 +31,7 @@ namespace Sellify.WebAPI.Controllers
         [HttpPost("login")]
         public async Task<ActionResult> InternalLoginTest([FromBody] InternalUserLoginDTO userLoginDTO)
         {
+            var refreshTokenCookieExpirationInDays = 30;
             var result = await _mediator.Send(new InternalUserLoginCommand() { userLoginDTO = userLoginDTO });
 
             if(result.data?.RefreshToken is not null)
@@ -38,8 +40,7 @@ namespace Sellify.WebAPI.Controllers
                         HttpOnly=true ,
                         Secure=true,
                         SameSite=SameSiteMode.None,
-                        Expires=DateTimeOffset.UtcNow.AddHours(1)});
-            
+                        Expires=DateTimeOffset.UtcNow.AddDays(refreshTokenCookieExpirationInDays)});
             return StatusCode(result.statusCode, new GenericResultDTO(result.data?.AccessToken,result.statusCode));
         }
     }

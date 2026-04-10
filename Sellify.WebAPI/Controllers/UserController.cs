@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Sellify.Application.Features.Authentication.Commands.UpdateUserProfile;
 using Sellify.Application.Features.Authentication.Query.GetUserProfile;
 using Sellify.Application.Global;
+using System.Security.Claims;
 
 namespace Sellify.WebAPI.Controllers
 {
@@ -22,8 +23,8 @@ namespace Sellify.WebAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<GenericResultDTO<GetUserProfileQueryDTO>>> GetUserProfile()
         {
-            var refreshToken = Request.Cookies?["bearer"];
-           return await _mediator.Send(new GetUserProfileQuery(refreshToken));
+            var userId = User.FindFirstValue("sid");
+           return await _mediator.Send(new GetUserProfileQuery(userId));
         }
         [Authorize]
         [HttpPut]
