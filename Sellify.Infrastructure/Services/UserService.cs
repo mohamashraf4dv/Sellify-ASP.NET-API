@@ -49,7 +49,6 @@ namespace Sellify.Infrastructure.Services
 
             var userProfileDTO = new GetUserProfileQueryDTO(applicationUser.FirstName, applicationUser.LastName, applicationUser?.Email, applicationUser?.UserName, applicationUser?.PhoneNumber, roles,applicationUser?.SellerRoleRequestStatus.ToString());
             return new GenericResultDTO<GetUserProfileQueryDTO>(userProfileDTO, 200);
-
         }
 
         public async Task<GenericResultDTO> RequestRoleAsync(string refreshToken, SellerRoleRequestStatus? sellerRoleRequestStatus = null)
@@ -117,7 +116,16 @@ namespace Sellify.Infrastructure.Services
             return new GenericResultDTO(null, 500);
         }
 
+        public async Task<GenericResultDTO<GetUserProfileQueryDTO>> GetUserInformationById(string userId)
+        {
+            var applicationUser = await _userManager.FindByIdAsync(userId);
+            if (applicationUser is null)
+                return new GenericResultDTO<GetUserProfileQueryDTO>(null, 404);
 
+            var roles = await _userManager.GetRolesAsync(applicationUser);
 
+            var userProfileDTO = new GetUserProfileQueryDTO(applicationUser.FirstName, applicationUser.LastName, applicationUser.Email!, applicationUser.UserName!, applicationUser?.PhoneNumber, roles, applicationUser?.SellerRoleRequestStatus.ToString());
+            return new GenericResultDTO<GetUserProfileQueryDTO>(userProfileDTO, 200);
+        }
     }
 }

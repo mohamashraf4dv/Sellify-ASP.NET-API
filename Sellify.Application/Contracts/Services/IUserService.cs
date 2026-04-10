@@ -10,5 +10,7 @@ namespace Sellify.Application.Contracts.Services
         public Task<GenericResultDTO> RequestRoleAsync(string refreshToken ,SellerRoleRequestStatus? sellerRoleRequestStatus=null);
         public Task<GenericResultDTO<GetUserProfileQueryDTO>> GetUserInformationByRefreshToken(string refreshToken);
         public Task<GenericResultDTO> UpdateUserProfile(UpdateUserProfileDTO updateUserProfile);
+        public Task<GenericResultDTO<GetUserProfileQueryDTO>> GetUserInformationById(string userId);
+
     }
 }
