@@ -6,7 +6,6 @@ using Sellify.Application.Features.Orders.Command.CreateOrder;
 using Sellify.Application.Features.Payment.Command.CreatePaymentIntent;
 using Sellify.Application.Features.Payment.Command.CreatePaymentSession;
 using Sellify.Application.Global;
-using Stripe.Checkout;
 using System.Security.Claims;
 
 namespace Sellify.WebAPI.Controllers
@@ -33,7 +32,6 @@ namespace Sellify.WebAPI.Controllers
         public async Task<ActionResult<GenericResultDTO>> CreateOrder([FromBody] CreateOrderDTO createOrderDTO)
         {
             return await _mediator.Send(new CreateOrderCommand(createOrderDTO.SessionId));
-            //return await _mediator.Send(new CreateOrderCommand(createOrderRequest.Order, createOrderRequest.ProductsIds, userId));
         }
     }
 }
