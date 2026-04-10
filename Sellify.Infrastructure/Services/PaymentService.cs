@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using Sellify.Application.Features.Orders.Command.CreateOrder;
+using Sellify.Application.Features.Payment.Command.CreatePaymentSession;
+using Sellify.Application.Global;
 using Sellify.Infrastructure.AppSettingOptions;
 using Stripe;
 using Stripe.Checkout;
@@ -33,7 +35,7 @@ namespace Sellify.Infrastructure.Services
 
         }
 
-        public async Task<string> CreatePaymentSession(IReadOnlyList<Domain.Entities.Product> products ,IReadOnlyDictionary<Guid,CreateOrderDTO> createOrderDto,string buyerId)
+        public async Task<string> CreatePaymentSession(IReadOnlyList<Domain.Entities.Product> products ,IReadOnlyDictionary<Guid, CreatePaymentSessionUsingOrderDTO> createOrderDto,string buyerId)
         {
             var lintItemsList = new List<SessionLineItemOptions>();
             foreach (var product in products) 
@@ -74,6 +76,21 @@ namespace Sellify.Infrastructure.Services
             var service = new SessionService();
             Session session = await service.CreateAsync(options);
             return session.Url;
+        }
+
+        public async Task<Dictionary<string,OrderSentFromStripeDTO>> GetOrderBySessionId(string sessionId)
+        {
+            var sessionService = new SessionService();
+            var session = await sessionService.GetAsync(sessionId);
+            if (session?.PaymentStatus != "paid")
+               return null;
+
+            var lineItemService = new SessionLineItemService();
+
+            var list = await lineItemService.ListAsync(sessionId);
+            //var selectedList = list.Select(l => new OrderSentFromStripeDTO(l.Metadata["SellerId"], l.Metadata["BuyerId"], l.Metadata["ProductId"], l.Price.UnitAmountDecimal, l.Quantity, l.AmountTotal));
+            var selectedList = list.GroupBy(l => l.Metadata["ProductId"], l=>  new OrderSentFromStripeDTO(l.Metadata["SellerId"], l.Metadata["BuyerId"], l.Metadata["ProductId"], l.Price.UnitAmountDecimal, l.Quantity, l.AmountTotal)).ToDictionary(g=> g.Key, i=> i.FirstOrDefault());
+            return selectedList;
         }
     }
 }

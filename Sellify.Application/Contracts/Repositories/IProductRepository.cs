@@ -1,6 +1,4 @@
-﻿
-
-using Sellify.Application.Features.Products.Query.GetAllProducts;
+﻿using Sellify.Application.Features.Products.Query.GetAllProducts;
 using Sellify.Application.Features.Seller.Query.GetBySellerIdProducts;
 
 namespace Sellify.Application.Contracts.Repositories
@@ -11,6 +9,6 @@ namespace Sellify.Application.Contracts.Repositories
         //Task<IReadOnlyList<Product>> GetProductsBySellerId(string sellerId);
         Task<IReadOnlyList<GetBySellerIdProductsQueryDTO>> GetProductsBySellerId(string sellerId);
         public Task UpdateRangeSpecificallyStockPriceNameAsync(IReadOnlyList<Product> products);
-
+        Task UpdateRowVersion(Product product);
     }
 }

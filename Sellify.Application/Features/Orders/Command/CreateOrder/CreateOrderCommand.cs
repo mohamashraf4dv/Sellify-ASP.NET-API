@@ -2,10 +2,7 @@
 {
     public record CreateOrderCommand
         (
-            IReadOnlyDictionary<Guid,CreateOrderDTO> OrderDTO,
-            List<Guid> ProductsIds,
-            string BuyerId
-        
+            string SessionId
         ) : IRequest<GenericResultDTO>;
 
 }

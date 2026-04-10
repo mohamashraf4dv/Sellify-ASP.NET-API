@@ -14,7 +14,6 @@ namespace Sellify.Infrastructure.Implementations.Repositories
             this._efContext = efContext;
             this._dapperContext = dapperContext;
         }
-
         public async Task<Product?> GetAsync(string id)
         {
             var sql = "SELECT p.Id, Name ,Price, Stock , pimg.* FROM Products p INNER JOIN ProductImage pimg ON pimg.Id = ThumbnailId WHERE p.Id=@id;";
@@ -94,6 +93,16 @@ namespace Sellify.Infrastructure.Implementations.Repositories
             }
             return Task.CompletedTask;
         }
-        
+
+        public Task UpdateRowVersion(Product product)
+        {
+            _efContext.Entry(product)
+                .Property(p => p.RowVersion).CurrentValue = Guid.NewGuid();
+
+            _efContext.Entry(product)
+                .Property(p => p.RowVersion).IsModified=true;
+
+            return Task.CompletedTask;
+        }
     }
 }

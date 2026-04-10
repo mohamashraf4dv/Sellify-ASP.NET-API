@@ -1,8 +1,5 @@
 ﻿using Sellify.Domain.Contracts;
-using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace Sellify.Application.Contracts.Repositories
 {
