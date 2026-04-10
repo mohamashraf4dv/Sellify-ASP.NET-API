@@ -1,5 +1,6 @@
 <Solution>
   <Folder Name="/Tests/">
+    <Project Path="Sellify.Application.Test/Sellify.Application.Test.csproj" Id="727721d8-6ee3-46bd-abb4-f346baf16079" />
     <Project Path="Sellify.Infrastructure.Test/Sellify.Infrastructure.Test.csproj" Id="f357e3e6-454b-40bd-864b-58b83eb93020" />
   </Folder>
   <Project Path="Sellify.Application/Sellify.Application.csproj" />

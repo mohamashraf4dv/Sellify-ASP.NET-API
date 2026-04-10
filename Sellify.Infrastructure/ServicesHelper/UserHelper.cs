@@ -1,7 +1,7 @@
 ﻿
 namespace Sellify.Infrastructure.ServicesHelper
 {
-    public class UserHelper
+    public class UserHelper:IUserHelper
     {
         private UserManager<ApplicationUser> _userManager;
 
