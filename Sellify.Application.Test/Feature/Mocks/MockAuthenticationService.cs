@@ -9,7 +9,7 @@ using Sellify.Infrastructure.IdentityUserModel;
 using Sellify.Infrastructure.Mapperly;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace Sellify.Application.Test.Feature.Mocks
+namespace Sellify.Application.Test.Feature.Mock
 {
     public class MockAuthenticationService
     {

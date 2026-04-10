@@ -5,7 +5,7 @@ using Moq;
 using Sellify.Application.Contracts.Services;
 using Sellify.Application.Features.Authentication.Commands.UserRegisteration;
 using Sellify.Application.Features.Token;
-using Sellify.Application.Test.Feature.Mocks;
+using Sellify.Application.Test.Feature.Mock;
 using Sellify.Infrastructure.IdentityUserModel;
 using Sellify.Infrastructure.Mapperly;
 namespace Sellify.Application.Test.Feature.Authentication.Commands.UserRegisteration

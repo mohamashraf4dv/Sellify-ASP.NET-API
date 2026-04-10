@@ -2,11 +2,12 @@
 using Moq;
 using Sellify.Application.Contracts.Services;
 using Sellify.Application.Features.Authentication.Commands.UpdateUserProfile;
+using Sellify.Application.Features.Authentication.Query.GetUserProfile;
 using Sellify.Application.Global;
 using Sellify.Infrastructure.IdentityUserModel;
 using Sellify.Infrastructure.Mapperly;
 
-namespace Sellify.Application.Test.Feature.Mocks
+namespace Sellify.Application.Test.Feature.Mock
 {
     public class MockUserService
     {
@@ -30,6 +31,15 @@ namespace Sellify.Application.Test.Feature.Mocks
                 return new GenericResultDTO(null, 200);
             });
 
+            mock.Setup(u => u.GetUserInformationById(It.IsAny<string>())).ReturnsAsync((string userId) =>
+            {
+                var applicationUser = applicationUsers.FirstOrDefault(a => a.Id == userId);
+                if (applicationUser is null)
+                    return new GenericResultDTO<GetUserProfileQueryDTO>(null, 404);
+
+                var userProfileDTO = new GetUserProfileQueryDTO(applicationUser.FirstName, applicationUser.LastName, applicationUser.Email!, applicationUser.UserName!, applicationUser?.PhoneNumber, null, applicationUser?.SellerRoleRequestStatus.ToString());
+                return new GenericResultDTO<GetUserProfileQueryDTO>(userProfileDTO, 200);
+            });
             return mock;
         }
     }

@@ -3,7 +3,7 @@ using Moq;
 using Sellify.Application.Contracts.Services;
 using Sellify.Application.Features.Authentication.Commands.UpdateUserProfile;
 using Sellify.Application.Features.Token.Commands.UpdateAccessToken;
-using Sellify.Application.Test.Feature.Mocks;
+using Sellify.Application.Test.Feature.Mock;
 
 namespace Sellify.Application.Test.Feature.Authentication.Commands.UpdateUserProfile
 {
