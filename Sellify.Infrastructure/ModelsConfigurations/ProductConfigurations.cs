@@ -34,6 +34,9 @@ namespace Sellify.Infrastructure.ModelsConfigurations
 
             builder.HasMany(p => p.OrderItems)
                 .WithOne(oi=> oi.Product).HasForeignKey(oi => oi.ProductId).OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasMany(p => p.UserWishlistProducts)
+                .WithOne(uwp => uwp.Product).HasForeignKey(uwp => uwp.ProductId).OnDelete(DeleteBehavior.NoAction);
             #endregion
         }
     }

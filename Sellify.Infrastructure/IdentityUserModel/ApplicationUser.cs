@@ -22,5 +22,8 @@ namespace Sellify.Infrastructure.IdentityUserModel
 
         // Each Application User can have Many Orders as a Buyer
         public ICollection<Order> Orders { get; set; } = new HashSet<Order>();
+
+        //Each ApplicationUser have many WishListProducts
+        public ICollection<UserWishlistProduct> UserWishlistProducts { get; set; } = new HashSet<UserWishlistProduct>();
     }
 }

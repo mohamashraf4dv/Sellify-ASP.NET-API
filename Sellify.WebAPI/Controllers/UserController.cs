@@ -32,5 +32,11 @@ namespace Sellify.WebAPI.Controllers
         {
             return await _mediator.Send(new UpdateUserProfileCommand(updateUserProfileDTO));
         }
+        [Authorize]
+        [HttpPost("Wishlist")]
+        public async Task<ActionResult<GenericResultDTO>> AddWishlistProduct( )
+        {
+            throw new NotImplementedException();
+        }
     }
 }

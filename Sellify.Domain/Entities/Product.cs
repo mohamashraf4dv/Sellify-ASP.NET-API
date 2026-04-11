@@ -41,6 +41,9 @@ namespace Sellify.Domain.Entities
         //Each Product have Many OrderItems
         public ICollection<OrderItem> OrderItems { get; set; } = new HashSet<OrderItem>();
 
+        //Each Product Have Many UserWishListProduct
+        public ICollection<UserWishlistProduct> UserWishlistProducts { get; set; }= new HashSet<UserWishlistProduct>();
+
         public Product BeginSellingTransaction(long quantity) 
         {
             if (quantity <= 0)
