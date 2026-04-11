@@ -18,7 +18,6 @@ namespace Sellify.Application.Features.Orders.Command.CreateOrder
         {
             var stripeReturnedDictionary =  await _paymentService.GetOrderBySessionId(request.SessionId);
             var productsFromDb = _productRepository.GetAllQueryable(p => stripeReturnedDictionary.Keys.Contains(p.Id.ToString())).ToHashSet();
-            //var productsFromDb = _unitOfWork.ProductRepository.GetAllQueryable(p => stripeReturnedDictionary.Keys.Contains(p.Id.ToString())).ToList();
 
             Order order = new Order() { BuyerId= stripeReturnedDictionary.Values.FirstOrDefault().BuyerId };
             await _unitOfWork.Order.CreateAsync(order);
