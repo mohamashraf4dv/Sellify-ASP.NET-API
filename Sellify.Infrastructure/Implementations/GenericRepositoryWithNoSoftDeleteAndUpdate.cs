@@ -1,10 +1,10 @@
 ﻿namespace Sellify.Infrastructure.Implementations
 {
-    public class GenericRepositoryWithNoDeleteAndUpdate<TEntity> : IGenericRepositoryWithNoDeleteAndUpdate<TEntity> where TEntity: class
+    public class GenericRepositoryWithNoSoftDeleteAndUpdate<TEntity> : IGenericRepositoryWithNoSoftDeleteAndUpdate<TEntity> where TEntity: class
     {
         private readonly SellifyMicrosoftSqlContext _context;
 
-        public GenericRepositoryWithNoDeleteAndUpdate(SellifyMicrosoftSqlContext context)
+        public GenericRepositoryWithNoSoftDeleteAndUpdate(SellifyMicrosoftSqlContext context)
         {
             this._context = context;
         }
@@ -12,6 +12,12 @@
         {
             await _context.Set<TEntity>().AddAsync(entity, cancellationToken);
             return entity;
+        }
+
+        public Task Delete(TEntity entity)
+        {
+            _context.Remove(entity);
+            return Task.CompletedTask;
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Sellify.Application.Contracts.Repositories
 {
-    public interface IOrderRepository:IGenericRepositoryWithNoDeleteAndUpdate<Order>
+    public interface IOrderRepository:IGenericRepositoryWithNoSoftDeleteAndUpdate<Order>
     {
     }
 }

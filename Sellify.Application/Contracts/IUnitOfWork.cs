@@ -7,8 +7,8 @@ namespace Sellify.Application.Contracts
 {
     public interface IUnitOfWork
     {
-        public IGenericRepositoryWithNoDeleteAndUpdate<Order> Order { get; }
-        public IGenericRepositoryWithNoDeleteAndUpdate<OrderItem> OrderItem { get; }
+        public IGenericRepositoryWithNoSoftDeleteAndUpdate<Order> Order { get; }
+        public IGenericRepositoryWithNoSoftDeleteAndUpdate<OrderItem> OrderItem { get; }
         Task<int> SaveChangesAsync();
     }
 }

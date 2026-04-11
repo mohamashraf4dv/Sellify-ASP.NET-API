@@ -4,27 +4,27 @@ namespace Sellify.Infrastructure.Implementations
     public class UnitOfWork : IUnitOfWork
     {
         private readonly SellifyMicrosoftSqlContext _context;
-        private IGenericRepositoryWithNoDeleteAndUpdate<Order>? _order= null;
-        private IGenericRepositoryWithNoDeleteAndUpdate<OrderItem>? _orderItem = null;
+        private IGenericRepositoryWithNoSoftDeleteAndUpdate<Order>? _order= null;
+        private IGenericRepositoryWithNoSoftDeleteAndUpdate<OrderItem>? _orderItem = null;
         public UnitOfWork(SellifyMicrosoftSqlContext context)
         {
             this._context = context;
         }
 
-        public IGenericRepositoryWithNoDeleteAndUpdate<Order> Order
+        public IGenericRepositoryWithNoSoftDeleteAndUpdate<Order> Order
         {
             get
             {
-                _order ??= new GenericRepositoryWithNoDeleteAndUpdate<Order>(_context);
+                _order ??= new GenericRepositoryWithNoSoftDeleteAndUpdate<Order>(_context);
                 return _order;
             }
         }
 
-        public IGenericRepositoryWithNoDeleteAndUpdate<OrderItem> OrderItem
+        public IGenericRepositoryWithNoSoftDeleteAndUpdate<OrderItem> OrderItem
         {
             get
             {
-                _orderItem ??= new GenericRepositoryWithNoDeleteAndUpdate<OrderItem>(_context);
+                _orderItem ??= new GenericRepositoryWithNoSoftDeleteAndUpdate<OrderItem>(_context);
                 return _orderItem;
             }
         }
