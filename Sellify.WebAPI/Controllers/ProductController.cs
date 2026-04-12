@@ -33,9 +33,11 @@ namespace Sellify.WebAPI.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<GenericResultDTO<GetProductByIdDTO>>> GetById([FromRoute] Guid id)
         {
-           return await _mediator.Send(new GetProductByIdQuery(id));
+            var userId = User.FindFirstValue("sid");
+           return await _mediator.Send(new GetProductByIdQuery(id,userId));
         }
         [Authorize(Roles = "Seller")]
         [HttpPost]

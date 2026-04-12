@@ -13,7 +13,7 @@ namespace Sellify.Application.Features.Products.Query.GetProductById
         public async Task<GenericResultDTO<GetProductByIdDTO>> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
         {
            var product =  await this._productRepository.GetAsync<GetProductByIdDTO>(request.ProductId
-               ,p => new GetProductByIdDTO(p.Id, p.ThumbnailSource, p.Price, p.Description, p.Stock, 
+               ,p => new GetProductByIdDTO(p.Id, p.ThumbnailSource, p.Price, p.Description, p.Stock, p.Name,p.UserWishlistProducts.Any(uwp=> uwp.UserId == request.UserId),
                     p.Reviews.Select(e=> new GetProductByIdReviews(e.Description,e.ApplicationUserName,e.Score)).ToList())
                 , f => f.Id == request.ProductId);
 

@@ -54,5 +54,10 @@ namespace Sellify.Infrastructure.Implementations
         {
             return await _context.Set<TEntity>().Where(predicateExpression).Select(selectedExpression).FirstOrDefaultAsync();
         }
+
+        public async Task<bool> IsExist(Expression<Func<TEntity, bool>> predicateExpression)
+        {
+            return await _context.Set<TEntity>().AnyAsync(predicateExpression);
+        }
     }
 }

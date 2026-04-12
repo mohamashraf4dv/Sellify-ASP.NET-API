@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Sellify.Infrastructure.ApplicationContext;
 
@@ -11,9 +12,11 @@ using Sellify.Infrastructure.ApplicationContext;
 namespace Sellify.Infrastructure.Migrations
 {
     [DbContext(typeof(SellifyMicrosoftSqlContext))]
-    partial class SellifyMicrosoftSqlContextModelSnapshot : ModelSnapshot
+    [Migration("20260412054213_adding-review-date")]
+    partial class addingreviewdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -323,8 +326,8 @@ namespace Sellify.Infrastructure.Migrations
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Score")
-                        .HasColumnType("int");
+                    b.Property<short>("Score")
+                        .HasColumnType("smallint");
 
                     b.HasKey("Id");
 
