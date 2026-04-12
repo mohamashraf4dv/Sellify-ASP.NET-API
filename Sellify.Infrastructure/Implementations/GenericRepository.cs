@@ -42,13 +42,17 @@ namespace Sellify.Infrastructure.Implementations
 
         public  IQueryable<TEntity> GetAllQueryable()
         {
-           return _context.Set<TEntity>().AsQueryable();
+           return _context.Set<TEntity>();
         }
 
         public  IQueryable<TEntity> GetAllQueryable(Expression<Func<TEntity,bool>> whereExpression)
         {
-            return _context.Set<TEntity>().Where(whereExpression).AsQueryable();
+            return _context.Set<TEntity>().Where(whereExpression);
+        }
 
+        public async Task<OutputEntity> GetAsync<OutputEntity>(Guid id, Expression<Func<TEntity, OutputEntity>> selectedExpression,Expression<Func<TEntity,bool>> predicateExpression)
+        {
+            return await _context.Set<TEntity>().Where(predicateExpression).Select(selectedExpression).FirstOrDefaultAsync();
         }
     }
 }

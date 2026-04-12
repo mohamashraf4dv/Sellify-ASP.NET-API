@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Sellify.Application.Contracts.Repositories;
 using Sellify.Application.Contracts.Services;
 using Sellify.Application.Features.Products.Command.SellerAddProduct;
 using Sellify.Application.Features.Products.Query.GetAllProducts;
+using Sellify.Application.Features.Products.Query.GetProductById;
 using Sellify.Application.Global;
 using Sellify.Domain.Entities;
 using Sellify.Infrastructure.Mapperly;
@@ -19,7 +21,7 @@ namespace Sellify.WebAPI.Controllers
         private readonly IMediator _mediator;
         private readonly IWebHostEnvironment environment;
 
-        public ProductController(IMediator mediator,IWebHostEnvironment environment)
+        public ProductController(IMediator mediator,IWebHostEnvironment environment,IProductRepository productRepository)
         {
             this._mediator = mediator;
             this.environment = environment;
@@ -30,6 +32,11 @@ namespace Sellify.WebAPI.Controllers
             return await _mediator.Send(new GetAllProductsQuery(page, number));
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<GenericResultDTO<GetProductByIdDTO>>> GetById([FromRoute] Guid id)
+        {
+           return await _mediator.Send(new GetProductByIdQuery(id));
+        }
         [Authorize(Roles = "Seller")]
         [HttpPost]
         public async Task<ActionResult<GenericResultDTO>> CreateNew([FromForm] SellerProductDTO productDto)

@@ -1,6 +1,8 @@
 ﻿using Sellify.Application.Features.Products.Command.SellerUpdateProducts;
 using Sellify.Application.Features.Products.Query.GetAllProducts;
+using Sellify.Application.Features.Products.Query.GetProductById;
 using Sellify.Application.Features.Seller.Query.GetBySellerIdProducts;
+using System.Linq.Expressions;
 
 namespace Sellify.Infrastructure.Implementations.Repositories
 {
@@ -16,7 +18,23 @@ namespace Sellify.Infrastructure.Implementations.Repositories
         }
         public async Task<Product?> GetAsync(string id)
         {
-            var sql = "SELECT p.Id, Name ,Price, Stock , pimg.* FROM Products p INNER JOIN ProductImage pimg ON pimg.Id = ThumbnailId WHERE p.Id=@id;";
+            //var sql = "SELECT p.Id, Name ,Price, Stock , pimg.* FROM Products p INNER JOIN ProductImage pimg ON pimg.Id = ThumbnailId WHERE p.Id=@id;";
+            var sql = @"	SELECT 
+                                p.Id,
+                                p.Price,
+                                p.Stock,
+                                p.ThumbnailSource,
+                                CONCAT(u.FirstName, ' ', u.LastName) AS SellerName,
+                                u.ImageURL AS SellerImage,
+                                AVG(r.Score) AS AvgRating,
+                                COUNT(r.Id) AS ReviewCount
+                            FROM Products p
+                            INNER JOIN Sellers s ON s.Id = p.SellerId
+                            INNER JOIN AspNetUsers u ON u.Id = s.Id
+                            LEFT JOIN Reviews r ON r.ProductId = p.Id
+                            GROUP BY 
+                                p.Id, p.Price, p.Stock, p.ThumbnailSource,
+                                u.FirstName, u.LastName, u.ImageURL;";
             using var connection = _dapperContext.Connection;
             Product product = await connection.QuerySingleOrDefaultAsync<Product>(sql, new { id });
             return product;

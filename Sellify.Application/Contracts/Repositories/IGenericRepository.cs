@@ -11,5 +11,9 @@ namespace Sellify.Application.Contracts.Repositories
 
         public IQueryable<TEntity> GetAllQueryable();
         public IQueryable<TEntity> GetAllQueryable(Expression<Func<TEntity, bool>> whereExpression );
+
+        public Task<OutputEntity> GetAsync<OutputEntity>(Guid id, Expression<Func<TEntity, OutputEntity>> selectedExpression, Expression<Func<TEntity, bool>> predicateExpression);
+
+
     }
 }

@@ -10,5 +10,6 @@ namespace Sellify.Application.Contracts.Repositories
         Task<IReadOnlyList<GetBySellerIdProductsQueryDTO>> GetProductsBySellerId(string sellerId);
         public Task UpdateRangeSpecificallyStockPriceNameAsync(IReadOnlyList<Product> products);
         Task UpdateRowVersion(Product product);
+
     }
 }

@@ -10,5 +10,6 @@
         public Guid ProductId { get; set; }
 
         public string ApplicationUserId { get; set; }
+        public string ApplicationUserName { get; set; }
     }
 }
