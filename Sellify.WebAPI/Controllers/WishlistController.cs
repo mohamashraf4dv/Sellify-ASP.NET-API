@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Sellify.Application.Features.Products.Command.UserWishlistsProduct.Command.NewWishlist;
 using Sellify.Application.Features.Products.Command.UserWishlistsProduct.Command.UpdateWishlistStatus;
+using Sellify.Application.Features.Products.Command.UserWishlistsProduct.Query.GetUserWishlistedProducts;
 using Sellify.Application.Global;
 using Sellify.Domain.Enums;
 using System.Security.Claims;
@@ -33,6 +34,13 @@ namespace Sellify.WebAPI.Controllers
         {
             var userId = User.FindFirstValue("sid");
             return await _mediator.Send(new UpdateWishlistStatusCommand(wishlistDTO.ProductId, userId));
+        }
+        [Authorize]
+        [HttpGet()]
+        public async Task<ActionResult<GenericResultDTO<IReadOnlyList<GetUserWishlistedProductsDTO>>>> GetWishlistsByUserId()
+        {
+            var userId = User.FindFirstValue("sid");
+            return await _mediator.Send(new GetUserWishlistedProductsQuery(userId));
         }
     }
 }

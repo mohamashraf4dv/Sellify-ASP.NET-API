@@ -11,6 +11,11 @@ namespace Sellify.Infrastructure.Implementations.Repositories
             this._context = context;
         }
 
+        public IQueryable<UserWishlistProduct> GetAllWishlistProductsByUserId(string UserId)
+        {
+           return _context.UserWishlistProducts.Where(uwp=> uwp.UserId== UserId);
+        }
+
         public async Task<WishlistStatus> UpdateWishlistStatus(UserWishlistProduct userWishlistProduct, CancellationToken cancellationToken)
         {
             var existingUserWishListProduct = await _context.UserWishlistProducts

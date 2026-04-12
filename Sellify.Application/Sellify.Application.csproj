@@ -20,7 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Products\Command\UserWishlistsProduct\Query\" />
     <Folder Include="Features\Token\Query\" />
   </ItemGroup>
 
