@@ -61,7 +61,7 @@ Reliability is ensured through a comprehensive suite of unit tests:
 ### Setup
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/mohamashraf4dv/Sellify-ASP.NET-API.git](https://github.com/mohamashraf4dv/Sellify-ASP.NET-API.git)
+   git clone https://github.com/mohamashraf4dv/Sellify-ASP.NET-API.git
 
 2. **Configure Environment:**
    Open `appsettings.json` in the Web API project and update it with your credentials. 
