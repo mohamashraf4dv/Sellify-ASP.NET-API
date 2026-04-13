@@ -1,11 +1,4 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.DataProtection;
-using Microsoft.AspNetCore.Mvc;
-using Sellify.Application.Features.Token.Commands.RevokeToken;
-using Sellify.Application.Features.Token.Commands.UpdateAccessToken;
-
-namespace Sellify.WebAPI.Controllers
+﻿namespace Sellify.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

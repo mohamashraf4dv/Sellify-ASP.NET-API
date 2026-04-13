@@ -1,14 +1,4 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Sellify.Application.Features.Products.Command.UserWishlistsProduct.Command.NewWishlist;
-using Sellify.Application.Features.Products.Command.UserWishlistsProduct.Command.UpdateWishlistStatus;
-using Sellify.Application.Features.Products.Command.UserWishlistsProduct.Query.GetUserWishlistedProducts;
-using Sellify.Application.Global;
-using Sellify.Domain.Enums;
-using System.Security.Claims;
-
+﻿
 namespace Sellify.WebAPI.Controllers
 {
     [Route("api/[controller]")]

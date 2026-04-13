@@ -1,14 +1,4 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Sellify.Application.Features.Orders.Command.CreateOrder;
-using Sellify.Application.Features.Payment.Command.CreatePaymentIntent;
-using Sellify.Application.Features.Payment.Command.CreatePaymentSession;
-using Sellify.Application.Global;
-using System.Security.Claims;
-
-namespace Sellify.WebAPI.Controllers
+﻿namespace Sellify.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

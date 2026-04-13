@@ -1,12 +1,4 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Sellify.Application.Features.Reviews.Commands.CustomerWritesReview;
-using Sellify.Application.Global;
-using System.Security.Claims;
-
-namespace Sellify.WebAPI.Controllers
+﻿namespace Sellify.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

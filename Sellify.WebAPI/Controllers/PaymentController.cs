@@ -1,13 +1,4 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Sellify.Application.Contracts.Services;
-using Sellify.Application.Features.Payment.Query.GetStripePaymentIntentClientSecret;
-using Sellify.Application.Global;
-using Sellify.Infrastructure.Services;
-using Stripe;
-using Stripe.Checkout;
+﻿
 
 namespace Sellify.WebAPI.Controllers
 {

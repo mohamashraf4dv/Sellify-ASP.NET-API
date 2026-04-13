@@ -1,16 +1,4 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Sellify.Application.Contracts.Repositories;
-using Sellify.Application.Contracts.Services;
-using Sellify.Application.Features.Products.Command.SellerAddProduct;
-using Sellify.Application.Features.Products.Query.GetAllProducts;
-using Sellify.Application.Features.Products.Query.GetProductById;
-using Sellify.Application.Global;
-using Sellify.Domain.Entities;
-using Sellify.Infrastructure.Mapperly;
-using System.Security.Claims;
+﻿
 
 namespace Sellify.WebAPI.Controllers
 {

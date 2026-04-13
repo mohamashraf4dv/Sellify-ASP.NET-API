@@ -1,10 +1,3 @@
-using FluentValidation;
-using Scalar.AspNetCore;
-using Sellify.Application.Features.Authentication.Commands.InternalUserLogin;
-using Sellify.Application.ServiceAdder;
-using Sellify.Infrastructure.AppSettingOptions;
-using Sellify.Infrastructure.ServicesAdder;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.

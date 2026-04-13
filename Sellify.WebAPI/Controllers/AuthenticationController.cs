@@ -1,15 +1,4 @@
-﻿using FluentValidation;
-using FluentValidation.Results;
-using MediatR;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Sellify.Application.Features.Authentication.Commands.InternalUserLogin;
-using Sellify.Application.Features.Authentication.Commands.UserRegisteration;
-using Sellify.Application.Features.Token;
-using Sellify.Application.Global;
-using Sellify.Infrastructure.IdentityUserModel;
-using Sellify.Infrastructure.Mapperly;
-namespace Sellify.WebAPI.Controllers
+﻿namespace Sellify.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
