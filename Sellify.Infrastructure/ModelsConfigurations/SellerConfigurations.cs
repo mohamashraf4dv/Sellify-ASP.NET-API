@@ -1,5 +1,4 @@
-﻿
-namespace Sellify.Infrastructure.ModelsConfigurations
+﻿namespace Sellify.Infrastructure.ModelsConfigurations
 {
     public class SellerConfigurations : IEntityTypeConfiguration<Seller>
     {

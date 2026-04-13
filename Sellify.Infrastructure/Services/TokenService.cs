@@ -1,9 +1,4 @@
-﻿using Sellify.Application.Features.Token;
-using Sellify.Application.Global;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-
-namespace Sellify.Infrastructure.Services
+﻿namespace Sellify.Infrastructure.Services
 {
     public class TokenService:ITokenService
     {

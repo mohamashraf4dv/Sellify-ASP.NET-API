@@ -1,9 +1,4 @@
-﻿
-
-using Riok.Mapperly.Abstractions;
-using Sellify.Application.Features.Products.Command.SellerAddProduct;
-
-namespace Sellify.Infrastructure.Mapperly
+﻿namespace Sellify.Infrastructure.Mapperly
 {
     [Mapper]
     public static partial class ProductMapper

@@ -1,5 +1,4 @@
-﻿using Sellify.Domain.Enums;
-
+﻿
 namespace Sellify.Infrastructure.IdentityUserModel
 {
     public class ApplicationUser:IdentityUser

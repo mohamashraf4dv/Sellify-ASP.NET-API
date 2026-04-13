@@ -1,6 +1,4 @@
-﻿using Sellify.Application.Features.Token;
-
-namespace Sellify.Infrastructure.Implementations.Repositories
+﻿namespace Sellify.Infrastructure.Implementations.Repositories
 {
     internal class TokenRepository :ITokenRepository
     {

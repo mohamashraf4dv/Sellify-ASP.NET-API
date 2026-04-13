@@ -1,12 +1,4 @@
-﻿
-using Microsoft.Extensions.Logging;
-using Sellify.Application.Features.Authentication.Commands.UpdateUserProfile;
-using Sellify.Application.Features.Authentication.Query.GetUserProfile;
-using Sellify.Application.Global;
-using Sellify.Domain.Enums;
-using Sellify.Infrastructure.Mapperly;
-
-namespace Sellify.Infrastructure.Services
+﻿namespace Sellify.Infrastructure.Services
 {
     public class UserService : IUserService
     {

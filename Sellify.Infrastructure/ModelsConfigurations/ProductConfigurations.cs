@@ -1,7 +1,4 @@
-﻿
-using Sellify.Domain.Entities;
-
-namespace Sellify.Infrastructure.ModelsConfigurations
+﻿namespace Sellify.Infrastructure.ModelsConfigurations
 {
     public class ProductConfigurations : IEntityTypeConfiguration<Product>
     {

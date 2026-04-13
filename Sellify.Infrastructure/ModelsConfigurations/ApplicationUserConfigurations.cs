@@ -1,8 +1,4 @@
-﻿
-
-using Sellify.Domain.Enums;
-
-namespace Sellify.Infrastructure.ModelsConfigurations
+﻿namespace Sellify.Infrastructure.ModelsConfigurations
 {
     public class ApplicationUserConfigurations : IEntityTypeConfiguration<ApplicationUser>
     {

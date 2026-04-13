@@ -1,8 +1,4 @@
-﻿
-using Microsoft.Data.SqlClient;
-using System.Data;
-
-namespace Sellify.Infrastructure.ApplicationContext
+﻿namespace Sellify.Infrastructure.ApplicationContext
 {
     public class SellifyDapperContext : IDisposable
     {

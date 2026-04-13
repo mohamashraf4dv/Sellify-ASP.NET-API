@@ -1,8 +1,4 @@
-﻿
-
-using System.Linq.Expressions;
-
-namespace Sellify.Infrastructure.Implementations
+﻿namespace Sellify.Infrastructure.Implementations
 {
     public class GenericRepository<TEntity> :IGenericRepository<TEntity> where TEntity : class, ISoftDeletable, IEntityUpdatable
     {

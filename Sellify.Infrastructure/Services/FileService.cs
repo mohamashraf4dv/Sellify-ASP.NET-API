@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using static System.Net.Mime.MediaTypeNames;
-
+﻿using static System.Net.Mime.MediaTypeNames;
 namespace Sellify.Infrastructure.Services
 {
     public class FileService:IFileService

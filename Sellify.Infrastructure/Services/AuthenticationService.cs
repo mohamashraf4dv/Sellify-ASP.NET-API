@@ -1,15 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
-using Sellify.Application.Features.Authentication.Commands.InternalUserLogin;
-using Sellify.Application.Features.Authentication.Commands.UserRegisteration;
-using Sellify.Application.Global;
-
-using Sellify.Infrastructure.Mapperly;
-using Sellify.Application.Contracts.Services;
-using Sellify.Infrastructure.ServicesHelper;
-using Sellify.Application.Features.Token;
-
-namespace Sellify.Infrastructure.Services
+﻿namespace Sellify.Infrastructure.Services
 {
     public class AuthenticationService:IAuthenticationService
     {

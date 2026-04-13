@@ -1,9 +1,4 @@
-﻿
-
-using Sellify.Infrastructure.AppSettingOptions;
-using Sellify.Infrastructure.Implementations;
-
-namespace Sellify.Infrastructure.ServicesAdder
+﻿namespace Sellify.Infrastructure.ServicesAdder
 {
     public static class InfrastructureServicesAdder
     {

@@ -1,12 +1,4 @@
-﻿using Microsoft.Extensions.Options;
-using Sellify.Application.Features.Orders.Command.CreateOrder;
-using Sellify.Application.Features.Payment.Command.CreatePaymentSession;
-using Sellify.Application.Global;
-using Sellify.Infrastructure.AppSettingOptions;
-using Stripe;
-using Stripe.Checkout;
-using Stripe.V2;
-
+﻿ using Stripe;
 namespace Sellify.Infrastructure.Services
 {
     public class PaymentService:IPaymentService

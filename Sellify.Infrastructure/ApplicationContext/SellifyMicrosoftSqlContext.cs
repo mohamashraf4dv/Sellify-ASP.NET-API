@@ -1,7 +1,4 @@
-﻿
-
-
-namespace Sellify.Infrastructure.ApplicationContext
+﻿namespace Sellify.Infrastructure.ApplicationContext
 {
     public class SellifyMicrosoftSqlContext:IdentityDbContext<ApplicationUser>
     {

@@ -1,5 +1,4 @@
-﻿using Sellify.Domain.Enums;
-
+﻿
 namespace Sellify.Infrastructure.Implementations.Repositories
 {
     public class WishlistRepository : GenericRepositoryWithNoSoftDeleteAndUpdate<UserWishlistProduct>, IWishlistRepository

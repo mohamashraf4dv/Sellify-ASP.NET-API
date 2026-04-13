@@ -1,9 +1,4 @@
-﻿using Sellify.Application.Features.Products.Command.SellerUpdateProducts;
-using Sellify.Application.Features.Products.Query.GetAllProducts;
-using Sellify.Application.Features.Products.Query.GetProductById;
-using Sellify.Application.Features.Seller.Query.GetBySellerIdProducts;
-using System.Linq.Expressions;
-
+﻿
 namespace Sellify.Infrastructure.Implementations.Repositories
 {
     public class ProductRepository : GenericRepository<Product>,IProductRepository

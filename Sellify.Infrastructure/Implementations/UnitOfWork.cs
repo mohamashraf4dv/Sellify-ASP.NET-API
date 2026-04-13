@@ -1,5 +1,4 @@
-﻿
-namespace Sellify.Infrastructure.Implementations
+﻿namespace Sellify.Infrastructure.Implementations
 {
     public class UnitOfWork : IUnitOfWork
     {
