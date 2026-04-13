@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Sellify.Application.Contracts.Services;
@@ -29,14 +30,14 @@ namespace Sellify.WebAPI.Controllers
             return await _mediator.Send(new GetPaymentIntentClientSecretQuery( totalAmount ));
 
         }
-        [HttpGet("TEST")]
-        public async Task<ActionResult<GenericResultDTO>> TEST([FromQuery] string sessionId)
+        [Authorize(Roles = "Admin")]
+        [HttpGet("Session")]
+        public async Task<ActionResult<GenericResultDTO>> AdminPaymentSessionInvestegation([FromQuery] string sessionId)
         {
+            ///----- This Violates Clean Architecture & will be modified ! -----
             SessionService session = new SessionService();
-            var lineItemService = new SessionLineItemService();
-            var list =lineItemService.List(sessionId);
-           var sessionGot= await session.GetAsync(sessionId);
-            return Ok(list);
+            var sessionGot = await session.GetAsync(sessionId);
+            return Ok(sessionGot);
         }
 
 
