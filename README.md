@@ -1,80 +1,82 @@
-Sellify | Full-Stack E-Commerce API
-Sellify is a robust, secure, and scalable e-commerce Web API built with .NET 10. It provides a complete marketplace experience where users can buy and sell items, managed through a modern architectural stack and secure payment processing.
+# Sellify
 
-🚀 Key Features
-Secure Authentication: JWT-based auth using HttpOnly Cookies and Refresh Token rotation for maximum security.
+[![.NET 10](https://img.shields.io/badge/.NET-10-512bd4?logo=dotnet)](https://dotnet.microsoft.com/)
+[![SQL Server](https://img.shields.io/badge/SQL_Server-CC2927?logo=microsoft-sql-server&logoColor=white)](https://www.microsoft.com/en-us/sql-server/)
+[![Stripe](https://img.shields.io/badge/Stripe-635BFF?logo=stripe&logoColor=white)](https://stripe.com/)
 
-Payment Integration: Fully integrated with Stripe API for secure checkout sessions and payment intents.
+**Sellify** is a high-performance, secure e-commerce platform designed for modern marketplaces. This project demonstrates a deep understanding of the .NET ecosystem, focusing on architectural integrity, secure authentication flows, and scalable data management.
 
-Performance Optimized: Hybrid ORM approach—EF Core for write operations and Dapper for lightning-fast product retrieval on the landing page.
+---
 
-Seller Dashboard: Dedicated tools for sellers to upload images, manage inventory, and track listings.
+## 🏗️ Architectural Overview
 
-Customer Experience: Wishlist management, product reviews, and advanced pagination.
+The project is built using **Clean Architecture** and follows the **CQRS (Command Query Responsibility Segregation)** pattern to ensure a clear separation between read and write operations.
 
-File Management: Built-in server-side file handling for product image uploads.
+* **Result Pattern:** Implemented for a unified and predictable error-handling strategy across the API.
+* **Hybrid ORM Approach:** * **EF Core:** Used for 90% of the application to leverage robust change tracking and relationship management.
+    * **Dapper:** Utilized specifically for fetching products on the landing page to achieve maximum performance and minimal latency.
+* **Domain-Driven Design (DDD) Principles:** Focus on core business logic and entities.
 
-🏗️ Technical Architecture
-This project follows Clean Architecture principles to ensure separation of concerns and maintainability:
+---
 
-Domain: Entities, Enums, and Core Logic.
+## 🛡️ Security & Authentication
 
-Application: CQRS (Command Query Responsibility Segregation) pattern with MediatR.
+I’ve implemented a multi-layered security strategy to protect user data and financial transactions:
 
-Infrastructure: Persistence layer (SQL Server), Identity, and Third-party services (Stripe).
+* **JWT Authentication:** Secure token-based access.
+* **Secure Storage:** Tokens are delivered via **HttpOnly Cookies** to prevent XSS attacks.
+* **Refresh Tokens:** Implemented to maintain user sessions securely without frequent re-logins.
+* **Stripe Integration:** All payment processing is handled through Stripe API (Payment Intents & Checkout Sessions), ensuring PCI compliance.
 
-API: Controllers and Middleware using the Result Pattern for unified, predictable error handling.
+---
 
-🛠️ Tech Stack
-Backend: .NET 10 Web API
+## ✨ Key Features
 
-Database: SQL Server
+* **Marketplace Logic:** Users can register as both buyers and sellers.
+* **Inventory Management:** Sellers can add new products, upload images to the server, and edit existing listings.
+* **Commerce Tools:** * Integrated Wishlist for authenticated users.
+    * Product Review and Rating system.
+    * Pagination and advanced filtering for product discovery.
+* **Payment Gateway:** Fully functional Stripe integration for secure checkout.
 
-ORMs: EF Core (90%) & Dapper (High-speed reads)
+---
 
-Testing: xUnit, Moq, and Fluent Assertions
+## 🧪 Testing & Quality Assurance
 
-Security: JWT, Refresh Tokens, HttpOnly Cookies
+Reliability is ensured through a comprehensive suite of unit tests:
 
-Payments: Stripe SDK
+* **Framework:** xUnit
+* **Mocking:** Moq for isolating dependencies.
+* **Assertions:** Fluent Assertions for expressive and readable test logic.
 
-🚦 Getting Started
-Prerequisites
-.NET 10 SDK
+---
 
-SQL Server
+## 🚀 Getting Started
 
-Stripe Account (for API Keys)
+### Prerequisites
+* **.NET 10 SDK**
+* **SQL Server**
+* **Stripe API Keys**
 
-Installation
-Clone the repository:
+### Setup
+1. **Clone the repository:**
+   ```bash
+   git clone [https://github.com/mohamashraf4dv/Sellify-ASP.NET-API.git](https://github.com/mohamashraf4dv/Sellify-ASP.NET-API.git)
 
-Bash
-git clone https://github.com/your-username/sellify.git
-Configure Environment: Update appsettings.json with your credentials:
+2. **Configure Environment:**
+   Open `appsettings.json` in the Web API project and update it with your credentials. 
+   
+   > ⚠️ **Note:** For production or public repositories, never commit your actual Stripe Secret Keys. Use Environment Variables or User Secrets for local development.
 
-JSON
-{
-  "ConnectionStrings": {
-    "DefaultConnection": "Server=YOUR_SERVER;Database=SellifyDB;..."
-  },
-  "Stripe": {
-    "SecretKey": "your_stripe_secret_key"
-  }
-}
-Run Migrations:
+   ```json
+   {
+     "ConnectionStrings": {
+       "DefaultConnection": "Server=YOUR_SERVER;Database=SellifyDB;Trusted_Connection=True;TrustServerCertificate=True;"
+     },
+     "Stripe": {
+       "SecretKey": "sk_test_your_secret_key",
+       "PublishableKey": "pk_test_your_publishable_key"
+     }
+   }
 
-Bash
-dotnet ef database update
-Launch:
-
-Bash
-dotnet run
-🧪 Quality Assurance
-The project includes a comprehensive test suite to ensure business logic reliability:
-
-Unit Testing: Logic validated via xUnit.
-
-Mocking: External dependencies handled through Moq.
-
-Readability: Assertions written with Fluent Assertions for human-readable test cases.
+  3. Update-Database having migrations already set up
