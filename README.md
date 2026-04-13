@@ -36,7 +36,7 @@ I’ve implemented a multi-layered security strategy to protect user data and fi
 * **Inventory Management:** Sellers can add new products, upload images to the server, and edit existing listings.
 * **Commerce Tools:** * Integrated Wishlist for authenticated users.
     * Product Review and Rating system.
-    * Pagination and advanced filtering for product discovery.
+    * Pagination for rapid products loading .
 * **Payment Gateway:** Fully functional Stripe integration for secure checkout.
 
 ---
