@@ -12,10 +12,14 @@ namespace Sellify.Infrastructure.Services
     public class PaymentService:IPaymentService
     {
         private readonly IOptions<URLS> _domainOptions;
+        private readonly IGenericRepositoryWithNoSoftDeleteAndUpdate<PaymentSession> _paymentRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public PaymentService(IOptions<URLS> clientDomainOptions)
+        public PaymentService(IOptions<URLS> clientDomainOptions,IGenericRepositoryWithNoSoftDeleteAndUpdate<PaymentSession> paymentRepository, IUnitOfWork unitOfWork)
         {
             this._domainOptions = clientDomainOptions;
+            this._paymentRepository = paymentRepository;
+            this._unitOfWork = unitOfWork;
         }
         public async Task<string> GetPaymentIntentClientSecret(decimal amount , string currency = "usd")
         {
@@ -75,7 +79,8 @@ namespace Sellify.Infrastructure.Services
             };
             var service = new SessionService();
             Session session = await service.CreateAsync(options);
-            return session.Url;
+            var result = await SaveSession(session.Id, buyerId, products);
+            return result ? session.Url : "";
         }
 
         public async Task<Dictionary<string,OrderSentFromStripeDTO>> GetOrderBySessionId(string sessionId)
@@ -91,6 +96,13 @@ namespace Sellify.Infrastructure.Services
             //var selectedList = list.Select(l => new OrderSentFromStripeDTO(l.Metadata["SellerId"], l.Metadata["BuyerId"], l.Metadata["ProductId"], l.Price.UnitAmountDecimal, l.Quantity, l.AmountTotal));
             var selectedList = list.GroupBy(l => l.Metadata["ProductId"], l=>  new OrderSentFromStripeDTO(l.Metadata["SellerId"], l.Metadata["BuyerId"], l.Metadata["ProductId"], l.Price.UnitAmountDecimal, l.Quantity, l.AmountTotal)).ToDictionary(g=> g.Key, i=> i.FirstOrDefault());
             return selectedList;
+        }
+        private async Task<bool> SaveSession(string sessionId, string buyerId, IReadOnlyList<Domain.Entities.Product> products)
+        {
+            var paymentSession = new PaymentSession() { BuyerId = buyerId, SessionId = sessionId, TotalAmount = products.Sum(p => p.Price) };
+            await _paymentRepository.CreateAsync(paymentSession);
+            var result = await _unitOfWork.SaveChangesAsync();
+            return result > 0;
         }
     }
 }

@@ -17,6 +17,9 @@ namespace Sellify.Application.Features.Payment.Command.CreatePaymentIntent
         {
             var productsFromDB = _productRepository.GetAllQueryable(p => request.ProductsIds.Contains(p.Id)).ToList().AsReadOnly();
             var sessionUrl =await _paymentService.CreatePaymentSession(productsFromDB, request.OrderDTO,request.BuyerId);
+            if (string.IsNullOrEmpty(sessionUrl))
+                return new GenericResultDTO(null, 400);
+
             return new GenericResultDTO(sessionUrl,200);
         }
     }
