@@ -1,6 +1,4 @@
-﻿
-
-namespace Sellify.Domain.Contracts
+﻿namespace Sellify.Domain.Contracts
 {
     public interface IEntityUpdatable
     {

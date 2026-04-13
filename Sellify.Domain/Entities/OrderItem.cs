@@ -9,6 +9,7 @@ namespace Sellify.Domain.Entities
         public long Quantity { get; set; }
         public Guid OrderId { get; set; }
 
+        //Navigation Property
         public Product Product { get; set; }
         public Order Order { get; set; }
 

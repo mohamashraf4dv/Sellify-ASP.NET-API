@@ -11,6 +11,5 @@ namespace Sellify.Domain.Entities
         public Product Product { get; set; }
         public Guid ProductId { get; set; }
 
-        //public Product ProductUsesThumbnail { get; set; }
     }
 }
