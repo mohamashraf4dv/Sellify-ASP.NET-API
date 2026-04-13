@@ -7,21 +7,18 @@ namespace Sellify.WebAPI.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly IWebHostEnvironment environment;
 
-        public ProductController(IMediator mediator,IWebHostEnvironment environment,IProductRepository productRepository)
+        public ProductController(IMediator mediator,IProductRepository productRepository)
         {
             this._mediator = mediator;
-            this.environment = environment;
         }
         [HttpGet]
         public async Task<ActionResult<GenericResultDTO<GetAllProductsWithNextOptionDTO>>> GetAll([FromQuery] int page = 1, [FromQuery] int number = 11)
         {
             return await _mediator.Send(new GetAllProductsQuery(page, number));
         }
-
-        [HttpGet("{id}")]
         [Authorize]
+        [HttpGet("{id}")]
         public async Task<ActionResult<GenericResultDTO<GetProductByIdDTO>>> GetById([FromRoute] Guid id)
         {
             var userId = User.FindFirstValue("sid");

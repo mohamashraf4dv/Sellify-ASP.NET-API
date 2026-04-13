@@ -7,14 +7,12 @@ namespace Sellify.WebAPI.Controllers
     public class PaymentController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly IPaymentService _paymentService;
 
-        public PaymentController(IMediator mediator , IPaymentService paymentService)
+        public PaymentController(IMediator mediator )
         {
             this._mediator = mediator;
-            this._paymentService = paymentService;
         }
-
+        [Authorize]
         [HttpGet("StripeSecret")]
         public async Task<ActionResult<GenericResultDTO>> GetStripeClientSecret([FromQuery] decimal totalAmount)
         {

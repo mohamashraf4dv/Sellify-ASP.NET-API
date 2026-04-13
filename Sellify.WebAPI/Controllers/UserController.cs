@@ -2,6 +2,7 @@
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -10,14 +11,12 @@
         {
             this._mediator = mediator;
         }
-        [Authorize]
         [HttpGet]
         public async Task<ActionResult<GenericResultDTO<GetUserProfileQueryDTO>>> GetUserProfile()
         {
             var userId = User.FindFirstValue("sid");
            return await _mediator.Send(new GetUserProfileQuery(userId));
         }
-        [Authorize]
         [HttpPut]
         public async Task<ActionResult<GenericResultDTO>> UpdateUserProfile(UpdateUserProfileDTO updateUserProfileDTO)
         {

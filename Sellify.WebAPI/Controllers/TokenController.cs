@@ -1,5 +1,6 @@
 ﻿namespace Sellify.WebAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TokenController : ControllerBase
@@ -10,14 +11,13 @@
         {
             _mediator = mediator;
         }
-        [Authorize]
         [HttpGet("User")]
         public ActionResult GetApplicationUser() 
         {
             var name = User.Identity.Name;
             return Ok(name);
         }
-
+        [AllowAnonymous]
         [HttpPost("refresh")]
         public async Task<ActionResult> RefreshToken() 
         {
@@ -37,7 +37,7 @@
                 Secure = true,
                 SameSite = SameSiteMode.None,
                 });
-            return StatusCode(result.statusCode);
+            return StatusCode(result.StatusCode);
         }
     }
 }

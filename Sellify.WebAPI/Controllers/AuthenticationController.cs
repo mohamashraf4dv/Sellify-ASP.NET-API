@@ -16,7 +16,6 @@
             var result = await _mediator.Send(new UserRegisterationCommand() { userRegisteration = userRegisterationDTO });
             return StatusCode(result.statusCode,result);
         }
-
         [HttpPost("login")]
         public async Task<ActionResult> InternalLoginTest([FromBody] InternalUserLoginDTO userLoginDTO)
         {

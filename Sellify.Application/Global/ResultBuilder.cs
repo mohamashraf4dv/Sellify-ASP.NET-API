@@ -1,8 +1,9 @@
-﻿namespace Sellify.Application.Global
+﻿namespace Sellify.Application.Global.Results
 {
     #region Generic Version
     public sealed class Result<T>
     {
+        public int StatusCode { get => resultStatusCode; }
         private T? resultValue = default;
         private int resultStatusCode;
         private Dictionary<string, HashSet<string>>? resultErrorsKeyValues = null;
@@ -70,6 +71,7 @@
     #region Non-Generic Version (No Value Here)
     public sealed class Result
     {
+        public int StatusCode { get => resultStatusCode; }
         private int resultStatusCode;
         private Dictionary<string, HashSet<string>>? resultErrorsKeyValues = null;
         private Dictionary<string, string>? resultErrorsKeyValue = null;
@@ -79,7 +81,7 @@
             private int statusCode;
             private Dictionary<string, HashSet<string>>? errorsKeyValues = null;
             private Dictionary<string, string>? errorsKeyValue = null;
-            private ResultBuilder() { }
+            public ResultBuilder() { }
 
             public ResultBuilder SetStatusCode(int statusCode)
             {

@@ -1,4 +1,5 @@
-﻿namespace Sellify.Infrastructure.Services
+﻿using Sellify.Application.Global.Results;
+namespace Sellify.Infrastructure.Services
 {
     public class TokenService:ITokenService
     {
@@ -113,25 +114,33 @@
             Token token = await _tokenRepository.GetTokenByRefreshTokenAsync(tokensDTO.RefreshToken);
             return !token.IsRevoked && !token.IsExpired;
         }
-        public async Task<GenericResultDTO> RevokeToken(string refreshToken)
+        public async Task<Result> RevokeToken(string refreshToken)
         {
             Token token = await _tokenRepository.GetTokenByRefreshTokenAsync(refreshToken);
-            var errors = new Dictionary<string, HashSet<string>>();
+            Application.Global.Results.Result.ResultBuilder resultBuilder = new();
             if(token is null)
             {
-                errors.Add("Refresh Token", new HashSet<string>() { "Token not found"});
-                return new GenericResultDTO(null, 404, errors);
+               var resultNotFound = resultBuilder.SetStatusCode(404)
+                    .SetOneErrorPerKeyValue("Token", "Token is not Found")
+                    .Build();
+
+                return resultNotFound;
             }
             else if (token.IsRevoked)
             {
-                    errors.Add("Refresh Token", new HashSet<string>() { "Token already revoked" });
-                    return new GenericResultDTO(null, 400, errors);
+                var resultAlreadyRevoked = resultBuilder.SetStatusCode(404)
+                     .SetOneErrorPerKeyValue("Refresh Token", "Token already revoked")
+                     .Build();
+                return resultAlreadyRevoked;
             }
             token.IsRevoked = true;
             token.ExpirationDate= DateTime.UtcNow;
             token.RevokationDate = DateTime.UtcNow;
             await _unitOfWork.SaveChangesAsync();
-            return new GenericResultDTO( null, 200 );
+
+            var resultSucceded = resultBuilder.SetStatusCode(200)
+                            .Build();
+            return resultSucceded;
         }
 
         private async Task<IEnumerable<Claim>> GetClaims(ApplicationUser applicationUser,bool isPersistence=false)
