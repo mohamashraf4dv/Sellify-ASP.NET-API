@@ -1,4 +1,6 @@
-﻿namespace Sellify.WebAPI.Controllers
+﻿using Sellify.Application.Features.Orders.Query.GetOrdersForSeller;
+
+namespace Sellify.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -31,6 +33,14 @@
         public async Task<ActionResult<GenericResultDTO>> UpdateChangedProducts(IReadOnlyList<SellerUpdateProductsDTO> products)
         {
             return await _mediator.Send(new SellerUpdateProductsCommand(products));
+        }
+
+        [HttpGet("Orders")]
+        [Authorize(Roles ="Seller")]
+        public async Task<ActionResult<GenericResultDTO>> GetSellerOrders()
+        {
+            var user = User.FindFirstValue("sid");
+            return await _mediator.Send(new GetOrdersForSellerQuery(user));
         }
         #region this might be added in the future
         /*

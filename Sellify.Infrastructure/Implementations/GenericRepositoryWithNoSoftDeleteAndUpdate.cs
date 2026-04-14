@@ -36,6 +36,5 @@
         {
             return await _context.Set<TEntity>().Where(predicate).GroupBy(groupByExpression).Select(selectExpression).ToListAsync();
         }
-
     }
 }
