@@ -7,3 +7,5 @@ global using MediatR;
 global using FluentValidation;
 global using Sellify.Application.Contracts.RepoBehavior;
 global using Sellify.Domain.Entities;
+global using Sellify.Application.Contracts.Repositories;
+global using Sellify.Application.Global.Results;

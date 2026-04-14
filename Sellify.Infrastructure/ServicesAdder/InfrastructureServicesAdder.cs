@@ -43,6 +43,7 @@
             services.AddScoped<ITokenRepository, TokenRepository>();
             services.AddScoped<IWishlistRepository, WishlistRepository>();
             services.AddScoped<IReviewRepository, ReviewRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped(typeof(IGenericRepositoryWithNoSoftDeleteAndUpdate<>),typeof(GenericRepositoryWithNoSoftDeleteAndUpdate<>) );
             #endregion
 

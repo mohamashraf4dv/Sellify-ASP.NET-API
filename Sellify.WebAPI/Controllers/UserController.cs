@@ -1,4 +1,7 @@
-﻿namespace Sellify.WebAPI.Controllers
+﻿using Sellify.Application.Features.Orders.Query.GetOrdersForAuthenticatedUser;
+using Sellify.Application.Global.Results;
+
+namespace Sellify.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -22,6 +25,11 @@
         {
             return await _mediator.Send(new UpdateUserProfileCommand(updateUserProfileDTO));
         }
-
+        [HttpGet("Orders")]
+        public async Task<ActionResult<GenericResultDTO>> GetUserOrders()
+        {
+            var userId = User.FindFirstValue("sid");
+            return await _mediator.Send(new GetOrdersForAuthenticatedUserQuery(userId));
+        }
     }
 }

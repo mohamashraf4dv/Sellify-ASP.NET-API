@@ -30,7 +30,10 @@
 
         public async Task<int> SaveChangesAsync()
         {
-            //var tracked = _context.ChangeTracker.Entries<Product>().Select(p=> new {p.Entity.Id, p.Entity.RowVersion ,Original = p.OriginalValues["RowVersion"] }).ToList();
+            #region For Debugging Purposes !
+            //var tracked = _context.ChangeTracker.Entries<Product>().Select(p=> new {p.Entity.Id, p.Entity.RowVersion ,Original = p.OriginalValues["RowVersion"] }).ToList(); 
+            #endregion
+
             return await _context.SaveChangesAsync();
 
         }

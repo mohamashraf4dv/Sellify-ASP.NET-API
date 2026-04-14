@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Sellify.Infrastructure.ApplicationContext;
 
@@ -11,9 +12,11 @@ using Sellify.Infrastructure.ApplicationContext;
 namespace Sellify.Infrastructure.Migrations
 {
     [DbContext(typeof(SellifyMicrosoftSqlContext))]
-    partial class SellifyMicrosoftSqlContextModelSnapshot : ModelSnapshot
+    [Migration("20260413190722_adding-orders-dbset")]
+    partial class addingordersdbset
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -217,7 +220,7 @@ namespace Sellify.Infrastructure.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderItems");
+                    b.ToTable("OrderItem");
                 });
 
             modelBuilder.Entity("Sellify.Domain.Entities.PaymentSession", b =>
